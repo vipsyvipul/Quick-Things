@@ -346,7 +346,7 @@
     .sticky.t em { color: var(--teal-dark); }
 
     /* expandable stickies */
-    .sticky.x { padding: 0; }
+    .sticky.x { padding: 0; position: relative; }
 
     .sticky-head {
       display: flex;
@@ -358,7 +358,7 @@
       color: var(--text-2);
       background: none;
       border: none;
-      padding: 10px 12px 10px 14px;
+      padding: 10px 14px 14px;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -371,23 +371,32 @@
     }
     .sticky.t .sticky-head em { color: var(--teal-dark); }
 
+    /* + button sits on the bottom border, centered */
     .plus {
-      width: 17px;
-      height: 17px;
+      position: absolute;
+      bottom: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: var(--orange);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 1;
       flex-shrink: 0;
       transition: transform 0.25s ease;
+      cursor: pointer;
+      border: 2px solid var(--bg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      z-index: 10;
     }
     .sticky.t .plus { background: var(--teal-dark); }
-    .sticky.open .plus { transform: rotate(45deg); }
+    .sticky.open .plus { transform: translateX(-50%) rotate(45deg); }
 
     .sticky-body {
       max-height: 0;
@@ -402,7 +411,7 @@
     .sticky.open .sticky-body {
       max-height: 220px;
       opacity: 1;
-      padding: 0 12px 12px;
+      padding: 0 12px 22px;
     }
 
     .mini-chip {
@@ -497,6 +506,14 @@
       font-size: 12.5px;
       font-weight: 600;
       text-align: center;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.1s ease;
+      user-select: none;
+    }
+    .pm-save-btn:hover { filter: brightness(1.06); }
+    .pm-save-btn:active { transform: scale(0.97); }
+    .pm-save-btn.success {
+      background: linear-gradient(to bottom, #3cb97a, #2ea068);
+      border-color: #25855a;
     }
 
     .ob-window {
@@ -671,32 +688,6 @@
     .chip.active { background: var(--teal-dark); color: white; }
 
     /* ── CHROME: bottom corners ── */
-    .zoomctl {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      background: rgba(255,248,242,0.9);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .zoomctl button {
-      font-family: var(--font);
-      width: 38px; height: 36px;
-      background: none;
-      border: none;
-      font-size: 16px;
-      color: var(--text-2);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .zoomctl button:hover { background: var(--teal-light); color: var(--teal-dark); }
-    .zoomctl button + button { border-top: 1px solid var(--card-border); }
 
     .hint {
       position: fixed;
@@ -776,7 +767,6 @@
       <button class="chip" data-go="install">Install</button>
     </div>
 
-    <button class="btn-primary" data-go="install">Get QuickClip</button>
   </div>
 
   <!-- THE CANVAS -->
@@ -785,25 +775,23 @@
 
       <!-- pipeline edges -->
       <svg class="edges" viewBox="0 0 3200 2300" xmlns="http://www.w3.org/2000/svg">
-        <path class="edge" d="M 960 1160 C 1150 1230, 1250 1330, 1390 1390"/>
-        <path class="edge" d="M 1880 1390 C 2030 1330, 2130 1230, 2300 1160"/>
-        <path class="edge quiet" d="M 2480 1330 C 2380 1640, 2050 1860, 1830 1930"/>
-        <path class="edge quiet" d="M 1600 600 C 1600 720, 1480 850, 1130 990" opacity="0.55"/>
-        <text class="edge-label" x="1135" y="1340" text-anchor="middle">saves to your vault</text>
+        <!-- Capture info-card right edge → Manage info-card left edge -->
+        <path class="edge" d="M 1035 1200 C 1140 1270, 1280 1350, 1475 1400"/>
+        <!-- Manage info-card right edge → Organize info-card left edge -->
+        <path class="edge" d="M 1810 1400 C 2000 1350, 2140 1270, 2340 1200"/>
+        <!-- Organize → Install -->
+        <path class="edge quiet" d="M 2495 1290 C 2390 1560, 2060 1860, 1830 1930"/>
+        <!-- Hub → Capture (faint) -->
+        <path class="edge quiet" d="M 1600 480 C 1590 680, 1300 870, 1040 1100" opacity="0.45"/>
+        <text class="edge-label" x="1230" y="1370" text-anchor="middle">saves to your vault</text>
         <text class="edge-label" x="2090" y="1340" text-anchor="middle">indexed &amp; classified</text>
       </svg>
 
       <!-- HUB -->
       <div class="hub">
-        <div class="hub-eyebrow"><span class="hub-dot"></span> QuickClip — Web clipper for Obsidian</div>
         <h1>Your Obsidian knowledge workflow, <em>complete.</em></h1>
-        <p>Three tools, one map. Pan around, or click a node to travel the pipeline.</p>
         <div class="hub-actions">
           <button class="btn-primary large" data-go="capture">Start the journey →</button>
-          <button class="btn-map" data-go="overview">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
-            View the full map
-          </button>
         </div>
         <div class="hub-hint"><b>Drag</b> to pan &nbsp;·&nbsp; <b>Scroll / pinch</b> to zoom &nbsp;·&nbsp; <b>Click</b> a node to travel</div>
       </div>
@@ -837,12 +825,13 @@
               <div class="pm-save-btn">Clip to Obsidian</div>
             </div>
           </div>
-          <div class="sticky" style="left: -50px; top: -64px; transform: rotate(-2.4deg);"><em>~2×</em> faster saves</div>
-          <div class="sticky t x" style="right: -34px; bottom: -56px; transform: rotate(2deg);">
-            <button class="sticky-head"><em>6</em> clip types <span class="plus">+</span></button>
+          <div class="sticky" style="left: 10px; top: -52px; transform: rotate(-2.4deg);"><em>~2×</em> faster saves</div>
+          <div class="sticky t x" style="right: 10px; bottom: -52px; transform: rotate(2deg);">
+            <button class="sticky-head"><em>6</em> clip types</button>
             <div class="sticky-body">
               <span class="mini-chip">Highlight</span><span class="mini-chip">Full page</span><span class="mini-chip">Tweet</span><span class="mini-chip">PDF highlight</span><span class="mini-chip">Video clip</span><span class="mini-chip">Image</span>
             </div>
+            <span class="plus">+</span>
           </div>
         </div>
       </div>
@@ -883,13 +872,14 @@
             </ul>
             <a href="#" class="btn-primary">Install Plugin</a>
           </div>
-          <div class="sticky t x" style="left: -40px; bottom: -58px; transform: rotate(2.2deg);">
-            <button class="sticky-head">filter · search · browse <span class="plus">+</span></button>
+          <div class="sticky t x" style="left: 10px; bottom: -52px; transform: rotate(2.2deg);">
+            <button class="sticky-head">filter · search · browse</button>
             <div class="sticky-body">
               <span class="mini-chip">Filter by clip type</span><span class="mini-chip">Tag search</span><span class="mini-chip">Has-note filter</span><span class="mini-chip">Inline note editing</span><span class="mini-chip">Sortable columns</span><span class="mini-chip">Type badges</span>
             </div>
+            <span class="plus">+</span>
           </div>
-          <div class="sticky" style="right: -44px; top: -60px; transform: rotate(-1.8deg);">delete without <em>hunting</em></div>
+          <div class="sticky" style="right: 10px; top: -52px; transform: rotate(-1.8deg);">delete without <em>hunting</em></div>
         </div>
       </div>
 
@@ -932,16 +922,17 @@
               <span class="g-badge proj">→ PKM Research</span>
             </div>
           </div>
-          <div class="sticky x" style="left: -42px; top: -62px; transform: rotate(2deg);">
-            <button class="sticky-head">Portent: <em>8 types</em> <span class="plus">+</span></button>
+          <div class="sticky x" style="left: 10px; top: -52px; transform: rotate(2deg);">
+            <button class="sticky-head">Portent: <em>8 types</em></button>
             <div class="sticky-body">
               <span class="legend">Actionable</span>
               <span class="mini-chip port">Project</span><span class="mini-chip port">Operation</span><span class="mini-chip port">Responsibility</span><span class="mini-chip port">Task</span>
               <span class="legend">Knowledge</span>
               <span class="mini-chip entp">Event</span><span class="mini-chip entp">Note</span><span class="mini-chip entp">Topic</span><span class="mini-chip entp">Person</span>
             </div>
+            <span class="plus">+</span>
           </div>
-          <div class="sticky t" style="right: -30px; bottom: -56px; transform: rotate(-2.2deg);">your vault, <em>self-building</em></div>
+          <div class="sticky t" style="right: 10px; bottom: -52px; transform: rotate(-2.2deg);">your vault, <em>self-building</em></div>
         </div>
       </div>
 
@@ -983,11 +974,10 @@
     <a href="https://gist.github.com/vipsyvipul/f84f24e4b43f0dc3cf8ea78c3ce73495" target="_blank" rel="noopener">Privacy</a>
   </div>
 
-  <div class="zoomctl">
-    <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
-    <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
-    <button id="zfit" title="Overview" aria-label="Overview">⌂</button>
-  </div>
+  <button class="btn-map" id="viewmap" style="position:fixed;right:20px;bottom:20px;z-index:100;">
+    <svg id="viewmap-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
+    <span id="viewmap-label">View the full map</span>
+  </button>
 
   <script>
     (function () {
@@ -1021,17 +1011,63 @@
         return Math.min(1, (window.innerWidth - 60) / span, (window.innerHeight - 60) / 760);
       }
 
+      const clusterCenters = {
+        hub:      { x: 1600, y: 430 },
+        capture:  { x: 760,  y: 1140 },
+        manage:   { x: 1660, y: 1420 },
+        organize: { x: 2460, y: 1140 },
+        install:  { x: 1600, y: 1960 },
+      };
+
+      let detectTimer = null;
+      function detectSection() {
+        clearTimeout(detectTimer);
+        detectTimer = setTimeout(() => {
+          if (currentPreset === 'overview') return;
+          let nearest = 'hub', minDist = Infinity;
+          for (const [name, c] of Object.entries(clusterCenters)) {
+            const d = Math.hypot(cam.x - c.x, cam.y - c.y);
+            if (d < minDist) { minDist = d; nearest = name; }
+          }
+          if (nearest !== currentPreset) {
+            currentPreset = nearest;
+            if (nearest !== 'hub') prevPreset = nearest;
+            document.querySelectorAll('.chip').forEach(c =>
+              c.classList.toggle('active', c.dataset.go === nearest));
+            updateViewMapBtn(nearest);
+          }
+        }, 120);
+      }
+
       function apply() {
         const tx = window.innerWidth / 2 - cam.x * cam.s;
         const ty = window.innerHeight / 2 - cam.y * cam.s;
         world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + cam.s + ')';
+        detectSection();
       }
 
       let currentPreset = 'hub';
 
+      const viewMapBtn = document.getElementById('viewmap');
+      const viewMapLabel = document.getElementById('viewmap-label');
+      const viewMapIcon = document.getElementById('viewmap-icon');
+      // icon for "back to hub" — a house/return shape
+      const iconHub = `<path d="M7 2L1.5 7H3v5h3V9h2v3h3V7h1.5L7 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/>`;
+      const iconOverview = `<rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/>`;
+
+      const presetLabels = { hub: 'hub', capture: 'Capture', manage: 'Manage', organize: 'Organize', install: 'Install' };
+      let prevPreset = 'hub';
+
+      function updateViewMapBtn(name) {
+        const isOverview = (name === 'overview');
+        viewMapLabel.textContent = isOverview ? `← Back to ${presetLabels[prevPreset] || 'hub'}` : 'View the full map';
+        viewMapIcon.innerHTML = isOverview ? iconHub : iconOverview;
+      }
+
       function goTo(name) {
         const p = presets[name];
         if (!p) return;
+        if (name !== 'overview') prevPreset = name;
         currentPreset = name;
         const t = p();
         world.classList.add('glide');
@@ -1039,7 +1075,12 @@
         apply();
         document.querySelectorAll('.chip').forEach(c =>
           c.classList.toggle('active', c.dataset.go === name));
+        updateViewMapBtn(name);
       }
+
+      viewMapBtn.addEventListener('click', () => {
+        goTo(currentPreset === 'overview' ? prevPreset : 'overview');
+      });
 
       world.addEventListener('transitionend', () => world.classList.remove('glide'));
 
@@ -1047,13 +1088,33 @@
       const start = presets.hub();
       cam.x = start.x; cam.y = start.y; cam.s = start.s;
       apply();
+      updateViewMapBtn('hub');
 
       // ── expandable stickies ──
-      document.querySelectorAll('.sticky.x .sticky-head').forEach((head) => {
-        head.addEventListener('click', (e) => {
-          e.stopPropagation();
-          head.parentElement.classList.toggle('open');
+      document.querySelectorAll('.sticky.x').forEach((sticky) => {
+        ['.sticky-head', '.plus'].forEach(sel => {
+          const el = sticky.querySelector(sel);
+          if (el) el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sticky.classList.toggle('open');
+          });
         });
+      });
+
+      // ── Clip to Obsidian demo button ──
+      const saveBtn = document.querySelector('.pm-save-btn');
+      let toastTimer = null;
+      saveBtn.style.cursor = 'pointer';
+      saveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (saveBtn.classList.contains('success')) return;
+        saveBtn.classList.add('success');
+        saveBtn.textContent = '✓ Saved to My Vault';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          saveBtn.classList.remove('success');
+          saveBtn.textContent = 'Clip to Obsidian';
+        }, 2800);
       });
 
       // ── drag to pan (+ pinch) ──
@@ -1141,17 +1202,6 @@
         el.addEventListener('click', () => goTo(el.dataset.go));
       });
 
-      document.getElementById('zin').addEventListener('click', () => {
-        world.classList.add('glide');
-        zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1.35);
-        apply();
-      });
-      document.getElementById('zout').addEventListener('click', () => {
-        world.classList.add('glide');
-        zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1 / 1.35);
-        apply();
-      });
-      document.getElementById('zfit').addEventListener('click', () => goTo('overview'));
 
       // keyboard: arrows pan, +/- zoom, 0 overview
       window.addEventListener('keydown', (e) => {
