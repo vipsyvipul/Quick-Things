@@ -1,65 +1,40 @@
-document.addEventListener('DOMContentLoaded', () => {
-  initReveals();
-  initPipeline();
-  initSubnav();
-});
+(function () {
+  // ── Journey: switch scenes as copy steps cross the viewport center ──
+  const journey = document.querySelector('.journey');
+  const steps   = Array.from(document.querySelectorAll('.j-step'));
+  const scenes  = Array.from(document.querySelectorAll('.scene'));
 
-function initReveals() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  if (journey && steps.length === scenes.length) {
+    let active = 0;
+
+    function setStage(i) {
+      if (i === active) return;
+      active = i;
+      journey.dataset.stage = String(i + 1);
+      scenes.forEach((scene, idx) => {
+        scene.classList.toggle('is-active', idx === i);
+        scene.classList.toggle('is-past', idx < i);
+      });
+    }
+
+    const stepObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setStage(steps.indexOf(entry.target));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    steps.forEach((s) => stepObs.observe(s));
+  }
+
+  // ── Reveals ──
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
-        obs.unobserve(entry.target);
+        revealObs.unobserve(entry.target);
       }
     });
   }, { threshold: 0.12 });
 
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-}
-
-function initPipeline() {
-  const path = document.getElementById('pipePath');
-  if (!path) return;
-
-  const len = path.getTotalLength();
-  path.style.strokeDasharray = len;
-  path.style.strokeDashoffset = len;
-
-  const obs = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      path.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)';
-      path.style.strokeDashoffset = '0';
-      obs.disconnect();
-    }
-  }, { threshold: 0.3 });
-
-  const pipeline = document.querySelector('.pipeline');
-  if (pipeline) obs.observe(pipeline);
-}
-
-function initSubnav() {
-  const subnav = document.getElementById('subnav');
-  const hero   = document.getElementById('hero');
-  if (!subnav || !hero) return;
-
-  // Show after hero scrolls out
-  const heroObs = new IntersectionObserver(([entry]) => {
-    subnav.classList.toggle('subnav-visible', !entry.isIntersecting);
-  }, { threshold: 0.05 });
-  heroObs.observe(hero);
-
-  // Track active product section
-  const sections = document.querySelectorAll('[data-section]');
-  const tabs     = document.querySelectorAll('.subnav-tab');
-
-  const sectionObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.dataset.section;
-        tabs.forEach(t => t.classList.toggle('active', t.dataset.section === id));
-      }
-    });
-  }, { rootMargin: '-35% 0px -35% 0px' });
-
-  sections.forEach(s => sectionObs.observe(s));
-}
+  document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
+})();
