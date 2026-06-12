@@ -346,11 +346,12 @@
     .sticky.t em { color: var(--teal-dark); }
 
     /* expandable stickies */
-    .sticky.x { padding: 0; width: fit-content; }
+    .sticky.x { padding: 0; }
 
     .sticky-head {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 9px;
       font-family: var(--font);
       font-size: 12.5px;
@@ -358,9 +359,10 @@
       color: var(--text-2);
       background: none;
       border: none;
-      padding: 10px 14px 14px;
+      padding: 10px 14px;
       cursor: pointer;
       white-space: nowrap;
+      min-width: 100%;
     }
 
     .sticky-head em {
@@ -399,22 +401,23 @@
     .sticky.open .plus { transform: translateX(-50%) rotate(45deg); }
 
     .sticky-body {
+      padding: 0 12px 14px;
+      box-sizing: border-box;
       max-height: 0;
-      width: 0;
-      min-width: 0;
-      padding: 0;
       opacity: 0;
       overflow: hidden;
       white-space: normal;
-      transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 4px;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
     }
+
+    .sticky-body .legend { grid-column: 1 / -1; }
 
     .sticky.open .sticky-body {
       max-height: 220px;
-      width: auto;
-      min-width: 200px;
       opacity: 1;
-      padding: 0 12px 22px;
     }
 
     .mini-chip {
@@ -427,6 +430,7 @@
       font-weight: 500;
       color: var(--text-2);
       margin: 2px 3px 2px 0;
+      white-space: nowrap;
     }
 
     .mini-chip.port { background: var(--orange-soft); border-color: rgba(224,123,84,0.4); color: #a14f2e; }
@@ -1158,7 +1162,7 @@
       let dragDist = 0, lastMid = null, lastSpread = 0;
 
       viewport.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('a, button')) return;
+        if (e.target.closest('a, button, .plus')) return;
         viewport.setPointerCapture(e.pointerId);
         pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
         dragDist = 0;
