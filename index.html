@@ -346,7 +346,7 @@
     .sticky.t em { color: var(--teal-dark); }
 
     /* expandable stickies */
-    .sticky.x { padding: 0; }
+    .sticky.x { padding: 0; width: fit-content; }
 
     .sticky-head {
       display: flex;
@@ -400,19 +400,20 @@
 
     .sticky-body {
       max-height: 0;
+      width: 0;
+      min-width: 0;
+      padding: 0;
       opacity: 0;
       overflow: hidden;
       white-space: normal;
-      width: auto;
-      min-width: 0;
-      padding: 0 12px;
       transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
     }
 
     .sticky.open .sticky-body {
       max-height: 220px;
-      opacity: 1;
+      width: auto;
       min-width: 200px;
+      opacity: 1;
       padding: 0 12px 22px;
     }
 
@@ -773,7 +774,7 @@
 
   <!-- THE CANVAS -->
   <div class="viewport" id="viewport">
-    <div class="world glide" id="world">
+    <div class="world" id="world">
 
       <!-- pipeline edges -->
       <svg class="edges" viewBox="0 0 3200 2300" xmlns="http://www.w3.org/2000/svg">
@@ -802,7 +803,7 @@
       <div class="cluster" style="left: 700px; top: 1150px;" data-go="capture">
         <div class="ghost-num">01</div>
         <div class="cluster-row">
-          <div class="info-card">
+          <div class="info-card" id="cap-card">
             <div class="info-tag">Capture Extension · Chrome</div>
             <h2>Clip the web into Obsidian in seconds.</h2>
             <p class="sub">Highlights, full pages, tweets, PDFs, YouTube clips — structured Markdown, tagged and ready.</p>
@@ -813,7 +814,7 @@
             </ul>
             <a href="#" class="btn-primary">Add to Chrome — It's free</a>
           </div>
-          <div class="popup-mockup">
+          <div class="popup-mockup" id="cap-popup">
             <div class="pm-topbar">
               <span class="pm-logo">QuickClip</span>
               <div class="pm-vault-pill"><span class="pm-online-dot"></span> My Vault</div>
@@ -827,14 +828,6 @@
               <div class="pm-save-btn">Clip to Obsidian</div>
             </div>
           </div>
-          <div class="sticky" style="left: 10px; top: -52px; transform: rotate(-2.4deg);"><em>~2×</em> faster saves</div>
-          <div class="sticky t x" style="right: 10px; bottom: -52px; transform: rotate(2deg);">
-            <button class="sticky-head"><em>6</em> clip types</button>
-            <div class="sticky-body">
-              <span class="mini-chip">Highlight</span><span class="mini-chip">Full page</span><span class="mini-chip">Tweet</span><span class="mini-chip">PDF highlight</span><span class="mini-chip">Video clip</span><span class="mini-chip">Image</span>
-            </div>
-            <span class="plus">+</span>
-          </div>
         </div>
       </div>
 
@@ -842,7 +835,7 @@
       <div class="cluster teal" style="left: 1640px; top: 1430px;" data-go="manage">
         <div class="ghost-num">02</div>
         <div class="cluster-row">
-          <div class="ob-window">
+          <div class="ob-window" id="mgr-window">
             <div class="ob-titlebar">
               <span class="ob-dot"></span><span class="ob-dot"></span><span class="ob-dot"></span>
               <span class="ob-title">PKM Research — Obsidian</span>
@@ -863,7 +856,7 @@
               </div>
             </div>
           </div>
-          <div class="info-card">
+          <div class="info-card" id="mgr-card">
             <div class="info-tag">Clip Manager · Obsidian plugin</div>
             <h2>Your clips, beautifully rendered.</h2>
             <p class="sub">A reading view that feels native — plus a panel to edit, annotate, and delete without hunting through files.</p>
@@ -874,14 +867,6 @@
             </ul>
             <a href="#" class="btn-primary">Install Plugin</a>
           </div>
-          <div class="sticky t x" style="left: 10px; bottom: -52px; transform: rotate(2.2deg);">
-            <button class="sticky-head">filter · search · browse</button>
-            <div class="sticky-body">
-              <span class="mini-chip">Filter by clip type</span><span class="mini-chip">Tag search</span><span class="mini-chip">Has-note filter</span><span class="mini-chip">Inline note editing</span><span class="mini-chip">Sortable columns</span><span class="mini-chip">Type badges</span>
-            </div>
-            <span class="plus">+</span>
-          </div>
-          <div class="sticky" style="right: 10px; top: -52px; transform: rotate(-1.8deg);">delete without <em>hunting</em></div>
         </div>
       </div>
 
@@ -889,7 +874,7 @@
       <div class="cluster navy" style="left: 2500px; top: 1150px;" data-go="organize">
         <div class="ghost-num">03</div>
         <div class="cluster-row">
-          <div class="info-card">
+          <div class="info-card" id="org-card">
             <div class="info-tag">Organize · Obsidian plugin</div>
             <h2>From clip backlog to organized knowledge.</h2>
             <p class="sub">A smart dashboard that classifies, links, and tracks your clips — your vault builds itself as you research.</p>
@@ -900,7 +885,7 @@
             </ul>
             <a href="#" class="btn-primary">Install Plugin</a>
           </div>
-          <div class="graph-canvas">
+          <div class="graph-canvas" id="org-graph">
             <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
               <path class="g-edge" d="M180 145 L102 76"/>
               <path class="g-edge" d="M180 145 L272 88"/>
@@ -924,19 +909,37 @@
               <span class="g-badge proj">→ PKM Research</span>
             </div>
           </div>
-          <div class="sticky x" style="left: 10px; top: -52px; transform: rotate(2deg);">
-            <button class="sticky-head">Portent: <em>8 types</em></button>
-            <div class="sticky-body">
-              <span class="legend">Actionable</span>
-              <span class="mini-chip port">Project</span><span class="mini-chip port">Operation</span><span class="mini-chip port">Responsibility</span><span class="mini-chip port">Task</span>
-              <span class="legend">Knowledge</span>
-              <span class="mini-chip entp">Event</span><span class="mini-chip entp">Note</span><span class="mini-chip entp">Topic</span><span class="mini-chip entp">Person</span>
-            </div>
-            <span class="plus">+</span>
-          </div>
-          <div class="sticky t" style="right: 10px; bottom: -52px; transform: rotate(-2.2deg);">your vault, <em>self-building</em></div>
         </div>
       </div>
+
+      <!-- STICKIES — positioned by JS via anchorSticky() -->
+      <div id="s-faster" class="sticky"><em>~2×</em> faster saves</div>
+      <div id="s-cliptypes" class="sticky t x">
+        <button class="sticky-head"><em>6</em> clip types</button>
+        <div class="sticky-body">
+          <span class="mini-chip">Highlight</span><span class="mini-chip">Full page</span><span class="mini-chip">Tweet</span><span class="mini-chip">PDF highlight</span><span class="mini-chip">Video clip</span><span class="mini-chip">Image</span>
+        </div>
+        <span class="plus">+</span>
+      </div>
+      <div id="s-hunting" class="sticky">delete without <em>hunting</em></div>
+      <div id="s-filter" class="sticky t x">
+        <button class="sticky-head">filter · search · browse</button>
+        <div class="sticky-body">
+          <span class="mini-chip">Filter by clip type</span><span class="mini-chip">Tag search</span><span class="mini-chip">Has-note filter</span><span class="mini-chip">Inline note editing</span><span class="mini-chip">Sortable columns</span><span class="mini-chip">Type badges</span>
+        </div>
+        <span class="plus">+</span>
+      </div>
+      <div id="s-portent" class="sticky x">
+        <button class="sticky-head">Portent: <em>8 types</em></button>
+        <div class="sticky-body">
+          <span class="legend">Actionable</span>
+          <span class="mini-chip port">Project</span><span class="mini-chip port">Operation</span><span class="mini-chip port">Responsibility</span><span class="mini-chip port">Task</span>
+          <span class="legend">Knowledge</span>
+          <span class="mini-chip entp">Event</span><span class="mini-chip entp">Note</span><span class="mini-chip entp">Topic</span><span class="mini-chip entp">Person</span>
+        </div>
+        <span class="plus">+</span>
+      </div>
+      <div id="s-selfbuild" class="sticky t">your vault, <em>self-building</em></div>
 
       <!-- INSTALL -->
       <div class="cluster" style="left: 1600px; top: 1980px;" data-go="install">
@@ -1092,6 +1095,36 @@
       cam.x = start.x; cam.y = start.y; cam.s = start.s;
       apply();
       updateViewMapBtn('hub');
+      // Double-rAF: first frame commits the transform, second measures stable layout
+      requestAnimationFrame(() => requestAnimationFrame(positionAllStickies));
+
+      // ── sticky anchoring ──
+      // Positions a sticky relative to a target card using measured screen coords.
+      // edge: 'top' | 'bottom'  dx/dy: offset in world units  rot: rotation degrees
+      function anchorSticky(id, targetId, edge, dx, dy, rot) {
+        const target = document.getElementById(targetId);
+        const sticky = document.getElementById(id);
+        if (!target || !sticky) return;
+        const r = target.getBoundingClientRect();
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const sx = r.left + r.width / 2;
+        const sy = edge === 'top' ? r.top : r.bottom;
+        // screen → world
+        const wx = cam.x + (sx - vw / 2) / cam.s + (dx || 0);
+        const wy = cam.y + (sy - vh / 2) / cam.s + (dy || 0);
+        sticky.style.left = wx + 'px';
+        sticky.style.top  = wy + 'px';
+        sticky.style.transform = `translateX(-50%) rotate(${rot}deg)`;
+      }
+
+      function positionAllStickies() {
+        anchorSticky('s-faster',    'cap-card',   'top',    20, -55, -2.4);
+        anchorSticky('s-cliptypes', 'cap-popup',  'bottom',  0,  18,  2.0);
+        anchorSticky('s-hunting',   'mgr-card',   'top',    20, -55, -1.8);
+        anchorSticky('s-filter',    'mgr-window', 'bottom',  0,  18,  2.2);
+        anchorSticky('s-portent',   'org-card',   'top',    20, -55,  2.0);
+        anchorSticky('s-selfbuild', 'org-graph',  'bottom',  0,  18, -2.2);
+      }
 
       // ── expandable stickies ──
       document.querySelectorAll('.sticky.x').forEach((sticky) => {
