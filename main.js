@@ -1,7 +1,7 @@
 (function () {
   const viewport = document.getElementById('viewport');
   const world = document.getElementById('world');
-  const W = 3200, H = 2500;
+  const W = 3200, H = 2600;
   const MIN_S = 0.14, MAX_S = 1.6;
 
   // camera = world point at viewport center + scale
@@ -17,11 +17,11 @@
 
   const presets = {
     hub:      () => ({ x: 1600, y: 430,  s: zoomFor(900) }),
-    overview: () => ({ x: 1600, y: 1280, s: fitScale() }),
-    capture:  () => ({ x: 650,  y: 1260, s: zoomFor(1080) }),
-    manage:   () => ({ x: 1660, y: 1580, s: zoomFor(1120) }),
-    organize: () => ({ x: 2550, y: 1260, s: zoomFor(1120) }),
-    install:  () => ({ x: 1600, y: 2130, s: zoomFor(1020) })
+    overview: () => ({ x: 1600, y: 1380, s: fitScale() }),
+    capture:  () => ({ x: 560,  y: 1360, s: zoomFor(1080) }),
+    manage:   () => ({ x: 1660, y: 1730, s: zoomFor(1120) }),
+    organize: () => ({ x: 2630, y: 1360, s: zoomFor(1120) }),
+    install:  () => ({ x: 1600, y: 2280, s: zoomFor(1020) })
   };
 
   // scale so `span` world-px fit the viewport width (capped at 1)
@@ -31,10 +31,10 @@
 
   const clusterCenters = {
     hub:      { x: 1600, y: 430 },
-    capture:  { x: 630,  y: 1270 },
-    manage:   { x: 1640, y: 1580 },
-    organize: { x: 2570, y: 1270 },
-    install:  { x: 1600, y: 2130 },
+    capture:  { x: 530,  y: 1380 },
+    manage:   { x: 1640, y: 1740 },
+    organize: { x: 2670, y: 1380 },
+    install:  { x: 1600, y: 2300 },
   };
 
   let detectTimer = null;
