@@ -21,7 +21,7 @@
     capture:  () => ({ x: 560,  y: 1360, s: zoomFor(1080) }),
     manage:   () => ({ x: 1660, y: 1730, s: zoomFor(1120) }),
     organize: () => ({ x: 2630, y: 1360, s: zoomFor(1120) }),
-    install:  () => ({ x: 1600, y: 2280, s: zoomFor(1020) })
+    install:  () => ({ x: 1600, y: 2650, s: zoomFor(1020) })
   };
 
   // scale so `span` world-px fit the viewport width (capped at 1)
@@ -34,7 +34,7 @@
     capture:  { x: 530,  y: 1380 },
     manage:   { x: 1640, y: 1740 },
     organize: { x: 2670, y: 1380 },
-    install:  { x: 1600, y: 2300 },
+    install:  { x: 1600, y: 2500 },
   };
 
   let detectTimer = null;
