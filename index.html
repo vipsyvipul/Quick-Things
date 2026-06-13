@@ -448,80 +448,190 @@
 
     /* ── mockups (compact reuse) ── */
     .popup-mockup {
-      width: 290px;
-      background: white;
-      border-radius: 12px;
+      width: 310px;
+      background: var(--bg);
+      border-radius: 14px;
       border: 1px solid var(--card-border);
       box-shadow: 0 4px 12px rgba(0,0,0,0.07), 0 18px 48px rgba(42,92,85,0.14);
       overflow: hidden;
       font-size: 12px;
       transform: rotate(1.6deg);
+      font-family: var(--font);
+      color: var(--text);
     }
 
+    /* topbar */
     .pm-topbar {
-      padding: 9px 13px;
+      padding: 13px 14px 10px;
       border-bottom: 1px solid var(--card-border);
-      display: flex; align-items: center; gap: 9px;
+      display: flex; align-items: flex-start; justify-content: space-between;
     }
-    .pm-logo { font-size: 13.5px; font-weight: 700; letter-spacing: -0.03em; color: var(--navy); }
-    .pm-vault-pill {
-      display: flex; align-items: center; gap: 5px;
-      background: var(--bg);
-      border: 1px solid var(--card-border);
-      border-radius: 6px;
-      padding: 3px 7px 3px 5px;
-      font-size: 11px;
-      color: var(--text-2);
+    .pm-topbar-left { display: flex; flex-direction: column; gap: 4px; }
+    .pm-logo {
+      font-size: 16px; font-weight: 800; letter-spacing: -0.05em; color: #1c130e; line-height: 1.2;
     }
-    .pm-online-dot { width: 6px; height: 6px; background: #4caf7d; border-radius: 50%; animation: pulse-dot 2.5s ease-in-out infinite; }
+    .pm-vault-switcher {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 500; color: #999;
+    }
+    .pm-online-dot {
+      width: 6px; height: 6px; background: #4caf7d; border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(76,175,125,0.5);
+      animation: pulse-dot 2.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .pm-vault-arrow { font-size: 10px; opacity: 0.6; }
+    .pm-settings-icon { color: #aaa; flex-shrink: 0; margin-top: 2px; }
 
-    .pm-quote {
-      margin: 11px 13px 0;
-      padding: 8px 11px;
-      background: var(--orange-soft);
-      border-left: 3px solid var(--orange);
-      border-radius: 0 7px 7px 0;
-      font-size: 11px;
-      font-style: italic;
-      color: var(--text-2);
-      line-height: 1.5;
+    /* field sections */
+    .pm-body { padding: 11px 14px 13px; display: flex; flex-direction: column; gap: 0; }
+
+    .pm-field-label {
+      display: block;
+      font-size: 9px; font-weight: 700; color: #6b4a38;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 4px;
+    }
+    .pm-field-label-row {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
+    }
+    .pm-field-label-row .pm-field-label { margin-bottom: 0; }
+    .pm-toggle-row { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 500; color: #888; }
+    .pm-toggle-track {
+      position: relative; width: 26px; height: 15px;
+      background: #ddd4c8; border-radius: 8px; flex-shrink: 0;
+    }
+    .pm-toggle-thumb {
+      position: absolute; width: 11px; height: 11px;
+      background: white; border-radius: 50%; top: 2px; left: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
-    .pm-fields { padding: 11px 13px 13px; display: flex; flex-direction: column; gap: 9px; }
+    .pm-input {
+      width: 100%; padding: 7px 10px; margin-bottom: 9px;
+      border: 1px solid #e0cfbf; border-radius: 8px;
+      font-size: 11.5px; font-family: var(--font);
+      background: #ffffff; color: var(--text);
+    }
+    .pm-folder-picker {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 7px 10px; margin-bottom: 9px;
+      border: 1px solid #e0cfbf; border-radius: 8px;
+      font-size: 11.5px; background: white; color: var(--text);
+    }
+    .pm-folder-picker::after { content: "▾"; font-size: 10px; color: #999; }
+
     .pm-tags-box {
       border: 1px solid var(--teal);
       box-shadow: 0 0 0 3px rgba(145,198,188,0.18);
-      border-radius: 7px;
-      padding: 5px 8px;
+      border-radius: 8px; padding: 5px 8px; margin-bottom: 9px;
       display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+      background: white;
     }
     .pm-chip {
-      background: #e8f0ee;
-      border: 1px solid var(--teal);
-      border-radius: 5px;
-      padding: 2px 6px;
-      font-size: 11px;
-      color: var(--teal-dark);
-      font-weight: 500;
+      background: #c8e6e1; color: #236358;
+      border-radius: 5px; padding: 2px 7px;
+      font-size: 10.5px; font-weight: 600;
     }
+    .pm-chip-ghost {
+      font-size: 10.5px; color: #bbb;
+    }
+
+    .pm-textarea {
+      width: 100%; padding: 7px 10px; margin-bottom: 9px;
+      border: 1px solid #e0cfbf; border-radius: 8px;
+      font-size: 11px; font-family: var(--font);
+      background: #ffffff; color: #c8b4a0;
+      height: 44px; resize: none; line-height: 1.45;
+    }
+
     .pm-save-btn {
-      background: var(--orange-grad);
-      border: 1px solid var(--orange-border);
-      border-radius: 7px;
-      color: white;
-      padding: 8px 12px;
-      font-size: 12.5px;
-      font-weight: 600;
-      text-align: center;
-      transition: background 0.25s ease, border-color 0.25s ease, transform 0.1s ease;
+      background: linear-gradient(160deg, #e88560, #d06838);
+      border: 1px solid #b85530; border-radius: 8px;
+      color: white; padding: 9px 12px; margin-bottom: 7px;
+      font-size: 12px; font-weight: 700; font-family: var(--font);
+      text-align: center; width: 100%;
+      box-shadow: 0 1px 3px rgba(160,68,40,0.2);
       user-select: none;
     }
-    .pm-save-btn:hover { filter: brightness(1.06); }
-    .pm-save-btn:active { transform: scale(0.97); }
-    .pm-save-btn.success {
-      background: linear-gradient(to bottom, #3cb97a, #2ea068);
-      border-color: #25855a;
+    .pm-full-page-btn {
+      display: block; text-align: center; width: fit-content; margin: 0 auto;
+      background: none; border: 1px solid #8bbfb5; border-radius: 20px;
+      padding: 4px 12px; font-size: 10.5px; font-weight: 600;
+      color: #2a5c55; font-family: var(--font);
     }
+
+    /* status banner in popup (shows after save) */
+    .pm-status {
+      margin: 9px 0 0;
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 10.5px; line-height: 1.45;
+      display: flex; align-items: flex-start; gap: 7px;
+      background: #e8f5f3; color: #225550;
+      border: 1px solid #91C6BC; border-left: 3px solid #5aaca0;
+    }
+    .pm-status-icon { flex-shrink: 0; font-size: 13px; line-height: 1.3; }
+    .pm-status-body strong { display: block; font-weight: 700; font-size: 10.5px; margin-bottom: 2px; }
+    .pm-status-body em { font-style: italic; opacity: 0.8; }
+
+    /* save button invite animation */
+    @keyframes pm-btn-invite {
+      0%, 100% { box-shadow: 0 1px 3px rgba(160,68,40,0.2), 0 0 0 0 rgba(224,123,84,0); }
+      50% { box-shadow: 0 2px 8px rgba(160,68,40,0.3), 0 0 0 6px rgba(224,123,84,0); }
+    }
+    @keyframes pm-btn-glow {
+      0%, 100% { box-shadow: 0 1px 3px rgba(160,68,40,0.2); }
+      50% { box-shadow: 0 3px 14px rgba(208,104,56,0.55), 0 1px 3px rgba(160,68,40,0.25); }
+    }
+    .pm-save-btn {
+      cursor: pointer;
+      animation: pm-btn-glow 2s ease-in-out infinite;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+    .pm-save-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .pm-save-btn:active { transform: scale(0.97); }
+
+    /* success state */
+    .pm-save-btn.pm-saved {
+      background: linear-gradient(160deg, #4a8880, #3a7068);
+      border-color: #2a5c55;
+      box-shadow: 0 1px 3px rgba(42,92,85,0.2) !important;
+      animation: none;
+      cursor: default;
+    }
+    .pm-field-saved {
+      background: #f0eeec !important;
+      color: #aaa !important;
+      border-color: #e0dbd6 !important;
+    }
+    .pm-field-saved.pm-tags-box {
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .pm-open-obsidian {
+      display: block; text-align: center; width: fit-content; margin: 7px auto 0;
+      background: none; border: 1px solid #8bbfb5; border-radius: 20px;
+      padding: 4px 14px; font-size: 10.5px; font-weight: 600;
+      color: #2a5c55; font-family: var(--font); cursor: pointer;
+      opacity: 0; transform: translateY(4px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .pm-open-obsidian.pm-visible { opacity: 1; transform: translateY(0); }
+
+    /* daily note target banner (replaces file input when toggle is on) */
+    .pm-daily-note-target {
+      display: flex; align-items: center; gap: 6px;
+      background: #e8f5f3; border: 1px solid #91C6BC;
+      border-radius: 8px; padding: 7px 10px; margin-bottom: 9px;
+      font-size: 11px; font-weight: 500; color: #2a5c55;
+    }
+
+    /* toggle active state */
+    .pm-toggle-track.on { background: #91C6BC; }
+    .pm-toggle-track.on .pm-toggle-thumb { transform: translateX(11px); }
+    .pm-toggle-thumb { transition: transform 0.2s ease; }
+    .pm-toggle-track { transition: background 0.2s ease; }
 
     .ob-window {
       width: 360px;
@@ -820,16 +930,52 @@
           </div>
           <div class="popup-mockup" id="cap-popup">
             <div class="pm-topbar">
-              <span class="pm-logo">QuickClip</span>
-              <div class="pm-vault-pill"><span class="pm-online-dot"></span> My Vault</div>
+              <div class="pm-topbar-left">
+                <span class="pm-logo">QuickClip Capture</span>
+                <div class="pm-vault-switcher">
+                  <span class="pm-online-dot"></span>
+                  <span>My Vault</span>
+                  <span class="pm-vault-arrow">▾</span>
+                </div>
+              </div>
+              <div class="pm-settings-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
             </div>
-            <div class="pm-quote">"the best ideas come from connecting what you already know"</div>
-            <div class="pm-fields">
-              <div class="pm-tags-box">
+            <div class="pm-body">
+              <div class="pm-folder-section" id="pm-folder-section">
+                <span class="pm-field-label">Folder</span>
+                <div class="pm-folder-picker pm-folder-val">PKM Notes</div>
+              </div>
+              <div class="pm-field-label-row">
+                <span class="pm-field-label">Destination</span>
+                <div class="pm-toggle-row" id="pm-daily-toggle" style="cursor:pointer">
+                  <div class="pm-toggle-track" id="pm-toggle-track"><div class="pm-toggle-thumb" id="pm-toggle-thumb"></div></div>
+                  <span>Daily Note</span>
+                </div>
+              </div>
+              <div class="pm-input pm-dest-val" id="pm-dest-normal">Building a Second Brain</div>
+              <div class="pm-daily-note-target" id="pm-dest-daily" style="display:none">
+                <span>📅</span> Daily Notes / June 13, 2026.md
+              </div>
+              <span class="pm-field-label">Tags</span>
+              <div class="pm-tags-box pm-tags-val">
                 <span class="pm-chip">#pkm</span>
                 <span class="pm-chip">#ideas</span>
+                <span class="pm-chip">#second-brain</span>
               </div>
-              <div class="pm-save-btn">Clip to Obsidian</div>
+              <span class="pm-field-label">Note</span>
+              <div class="pm-textarea pm-note-val" style="color:var(--text-2)">Connect to Zettelkasten entry on knowledge synthesis.</div>
+              <div class="pm-save-btn" id="pm-save-btn">Save Highlight</div>
+              <div class="pm-full-page-btn" id="pm-full-page-btn">or save full page</div>
+              <div class="pm-open-obsidian" id="pm-open-obsidian">Open in Obsidian →</div>
+              <div class="pm-status" id="pm-status">
+                <span class="pm-status-icon">📋</span>
+                <div class="pm-status-body">
+                  <strong>Highlight ready</strong>
+                  <em>"the best ideas come from connecting what you already know"</em>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1141,20 +1287,63 @@
         });
       });
 
-      // ── Clip to Obsidian demo button ──
-      const saveBtn = document.querySelector('.pm-save-btn');
-      let toastTimer = null;
-      saveBtn.style.cursor = 'pointer';
-      saveBtn.addEventListener('click', (e) => {
+      // ── popup mockup interactions ──
+      const pmSaveBtn      = document.getElementById('pm-save-btn');
+      const pmFullPageBtn  = document.getElementById('pm-full-page-btn');
+      const pmOpenObsidian = document.getElementById('pm-open-obsidian');
+      const pmDailyToggle  = document.getElementById('pm-daily-toggle');
+      const pmToggleTrack  = document.getElementById('pm-toggle-track');
+      const pmFolderSec    = document.getElementById('pm-folder-section');
+      const pmDestNormal   = document.getElementById('pm-dest-normal');
+      const pmDestDaily    = document.getElementById('pm-dest-daily');
+      let pmSaved = false;
+      let pmDailyOn = false;
+
+      // daily note toggle
+      pmDailyToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (saveBtn.classList.contains('success')) return;
-        saveBtn.classList.add('success');
-        saveBtn.textContent = '✓ Saved to My Vault';
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-          saveBtn.classList.remove('success');
-          saveBtn.textContent = 'Clip to Obsidian';
-        }, 2800);
+        if (pmSaved) return;
+        pmDailyOn = !pmDailyOn;
+        pmToggleTrack.classList.toggle('on', pmDailyOn);
+        pmFolderSec.style.display   = pmDailyOn ? 'none' : '';
+        pmDestNormal.style.display  = pmDailyOn ? 'none' : '';
+        pmDestDaily.style.display   = pmDailyOn ? '' : 'none';
+      });
+
+      // save button
+      pmSaveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (pmSaved) return;
+        pmSaved = true;
+
+        // grey out fields
+        document.querySelector('.pm-folder-val').classList.add('pm-field-saved');
+        document.querySelector('.pm-dest-val').classList.add('pm-field-saved');
+        document.querySelector('.pm-tags-val').classList.add('pm-field-saved');
+        document.querySelector('.pm-note-val').classList.add('pm-field-saved');
+        if (pmDailyOn) pmDestDaily.style.opacity = '0.5';
+
+        // button → ✓ Saved (teal)
+        pmSaveBtn.classList.add('pm-saved');
+        pmSaveBtn.textContent = '✓ Saved';
+
+        // swap full page → Open in Obsidian
+        pmFullPageBtn.style.display = 'none';
+        pmOpenObsidian.classList.add('pm-visible');
+
+        // auto-reset after 3.5s
+        setTimeout(() => {
+          pmSaved = false;
+          pmSaveBtn.classList.remove('pm-saved');
+          pmSaveBtn.textContent = 'Save Highlight';
+          document.querySelector('.pm-folder-val').classList.remove('pm-field-saved');
+          document.querySelector('.pm-dest-val').classList.remove('pm-field-saved');
+          document.querySelector('.pm-tags-val').classList.remove('pm-field-saved');
+          document.querySelector('.pm-note-val').classList.remove('pm-field-saved');
+          pmDestDaily.style.opacity = '';
+          pmFullPageBtn.style.display = '';
+          pmOpenObsidian.classList.remove('pm-visible');
+        }, 3500);
       });
 
       // ── drag to pan (+ pinch) ──
@@ -1162,7 +1351,7 @@
       let dragDist = 0, lastMid = null, lastSpread = 0;
 
       viewport.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('a, button, .plus')) return;
+        if (e.target.closest('a, button, .plus, .popup-mockup')) return;
         viewport.setPointerCapture(e.pointerId);
         pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
         dragDist = 0;
