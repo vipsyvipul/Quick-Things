@@ -140,14 +140,27 @@
   }
 
   // ── clip type switcher ──
+  const obWindow = document.getElementById('mgr-window');
+
   document.querySelectorAll('.clip-type-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const clip = btn.dataset.clip;
+      const oldH = obWindow.offsetHeight;
+
       document.querySelectorAll('.clip-type-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.ob-clip-view').forEach(v => v.classList.remove('active'));
       document.querySelector(`.ob-clip-view[data-clip="${clip}"]`).classList.add('active');
+
+      // animate ob-window to new content height
+      const newH = obWindow.scrollHeight;
+      obWindow.style.transition = 'none';
+      obWindow.style.height = oldH + 'px';
+      requestAnimationFrame(() => {
+        obWindow.style.transition = '';
+        obWindow.style.height = newH + 'px';
+      });
     });
   });
 

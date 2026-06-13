@@ -643,10 +643,9 @@ body::after {
   margin-bottom: 10px;
 }
 .qc-note-icon {
-  font-size: 13px;
-  color: rgba(255,255,255,0.25);
-  line-height: 1.4;
+  color: rgba(255,255,255,0.3);
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
 /* image */
@@ -875,6 +874,7 @@ body::after {
   overflow: hidden;
   font-size: 13px;
   transform: rotate(-1.4deg);
+  transition: height 0.35s cubic-bezier(0.22, 0.8, 0.25, 1);
 }
 .ob-titlebar {
   display: flex; align-items: center; gap: 8px;
