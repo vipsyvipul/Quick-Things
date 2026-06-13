@@ -629,19 +629,24 @@ body::after {
   cursor: pointer;
 }
 
-/* note field (shown above tweet/image clip content) */
+/* note field — rounded box with ○ icon, matches actual Obsidian render */
 .qc-note {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 11px;
-  color: rgba(255,255,255,0.45);
-  margin-bottom: 9px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.55;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 8px 11px;
+  margin-bottom: 10px;
 }
 .qc-note-icon {
   font-size: 13px;
-  color: rgba(255,255,255,0.22);
-  line-height: 1;
+  color: rgba(255,255,255,0.25);
+  line-height: 1.4;
+  flex-shrink: 0;
 }
 
 /* image */
