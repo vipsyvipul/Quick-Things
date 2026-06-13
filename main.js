@@ -154,8 +154,10 @@
       document.querySelector(`.ob-clip-view[data-clip="${clip}"]`).classList.add('active');
 
       // animate ob-window to new content height
-      const newH = obWindow.scrollHeight;
+      // reset to auto first so scrollHeight reflects new content, not the old locked value
       obWindow.style.transition = 'none';
+      obWindow.style.height = 'auto';
+      const newH = obWindow.scrollHeight;
       obWindow.style.height = oldH + 'px';
       requestAnimationFrame(() => {
         obWindow.style.transition = '';
