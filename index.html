@@ -313,29 +313,70 @@
             </ul>
             <a href="#" class="btn-primary">Install Plugin</a>
           </div>
-          <div class="graph-canvas" id="org-graph">
-            <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
-              <path class="g-edge" d="M180 145 L102 76"/>
-              <path class="g-edge" d="M180 145 L272 88"/>
-              <path class="g-edge" d="M180 145 L268 210"/>
-              <path class="g-edge" d="M102 76 L272 88"/>
-              <circle cx="50" cy="206" r="3.5" fill="rgba(145,198,188,0.25)"/>
-              <circle cx="320" cy="46" r="3.5" fill="rgba(145,198,188,0.25)"/>
-              <circle class="g-pulse" cx="180" cy="145" r="14" fill="rgba(224,123,84,0.25)"/>
-              <circle cx="180" cy="145" r="8" fill="#E07B54"/>
-              <text class="g-label main" x="180" y="177" text-anchor="middle">The best ideas come from…</text>
-              <circle cx="102" cy="76" r="11" fill="rgba(145,198,188,0.18)" stroke="#91C6BC" stroke-width="1.5"/>
-              <text class="g-label proj" x="102" y="55" text-anchor="middle">PKM Research</text>
-              <circle cx="272" cy="88" r="6" fill="rgba(145,198,188,0.5)"/>
-              <text class="g-label" x="272" y="70" text-anchor="middle">Zettelkasten</text>
-              <circle cx="268" cy="210" r="6" fill="rgba(145,198,188,0.5)"/>
-              <text class="g-label" x="268" y="233" text-anchor="middle">Tools for thought</text>
-            </svg>
-            <div class="graph-badges">
-              <span class="g-badge type">Type: Note</span>
-              <span class="g-badge org">✓ Organized</span>
-              <span class="g-badge proj">→ PKM Research</span>
+          <div class="org-table-mock" id="org-graph">
+            <div class="otm-tabs">
+              <span class="otm-tab active">All Clips</span>
+              <span class="otm-tab">By Type</span>
+              <span class="otm-tab">Archived</span>
+              <span class="otm-show-org"><span class="otm-chk on">✓</span> Show organized</span>
             </div>
+            <div class="otm-filters">
+              <span class="otm-fl">Type</span><span class="otm-fv">All types</span>
+              <span class="otm-fl">Progress</span><span class="otm-fv">All</span>
+              <span class="otm-fl">Date</span><span class="otm-fv">All time</span>
+            </div>
+            <table class="otm-table">
+              <thead><tr>
+                <th class="col-title">TITLE ↕</th>
+                <th class="col-type">TYPE ↕</th>
+                <th class="col-saved">SAVED ↓</th>
+                <th class="col-belongs">BELONGS TO</th>
+                <th class="col-org">ORG</th>
+                <th class="col-prog">PROG</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td class="otm-title">The best ideas come from…</td>
+                  <td><span class="otm-badge">Note</span></td>
+                  <td class="otm-muted">26 May</td>
+                  <td class="otm-belongs">PKM Research</td>
+                  <td class="otm-org-cell"><span class="otm-chk on">✓</span></td>
+                  <td class="otm-prog">●●○</td>
+                </tr>
+                <tr>
+                  <td class="otm-title">Building a Second Brain</td>
+                  <td><span class="otm-badge topic">Topic</span></td>
+                  <td class="otm-muted">26 May</td>
+                  <td class="otm-belongs dim">Search notes…</td>
+                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
+                  <td class="otm-prog">●○○</td>
+                </tr>
+                <tr>
+                  <td class="otm-title">Tiago Forte</td>
+                  <td><span class="otm-badge person">Person</span></td>
+                  <td class="otm-muted">14 May</td>
+                  <td class="otm-belongs dim">Search notes…</td>
+                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
+                  <td class="otm-prog">●○○</td>
+                </tr>
+                <tr>
+                  <td class="otm-title">BASB · Ali Abdaal</td>
+                  <td><span class="otm-badge">Note</span></td>
+                  <td class="otm-muted">12 Apr</td>
+                  <td class="otm-belongs dim">Search notes…</td>
+                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
+                  <td class="otm-prog">●○○</td>
+                </tr>
+                <tr>
+                  <td class="otm-title">Zettelkasten</td>
+                  <td><span class="otm-badge topic">Topic</span></td>
+                  <td class="otm-muted">8 Apr</td>
+                  <td class="otm-belongs dim">Search notes…</td>
+                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
+                  <td class="otm-prog">●○○</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
