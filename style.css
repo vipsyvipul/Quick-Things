@@ -193,7 +193,7 @@ body::after {
 
 .ghost-num {
   position: absolute;
-  top: -130px;
+  top: -180px;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--display);
