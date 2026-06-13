@@ -555,6 +555,13 @@ body::after {
   display: flex; align-items: flex-start; gap: 7px;
   background: #e8f5f3; color: #225550;
   border: 1px solid #91C6BC; border-left: 3px solid #5aaca0;
+  max-height: 80px; overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+.pm-status.pm-hidden {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
 }
 .pm-status-icon { flex-shrink: 0; font-size: 13px; line-height: 1.3; }
 .pm-status-body strong { display: block; font-weight: 700; font-size: 10.5px; margin-bottom: 2px; }

@@ -154,6 +154,7 @@
   const pmSaveBtn      = document.getElementById('pm-save-btn');
   const pmFullPageBtn  = document.getElementById('pm-full-page-btn');
   const pmOpenObsidian = document.getElementById('pm-open-obsidian');
+  const pmStatus       = document.getElementById('pm-status');
   const pmDailyToggle  = document.getElementById('pm-daily-toggle');
   const pmToggleTrack  = document.getElementById('pm-toggle-track');
   const pmFolderSec    = document.getElementById('pm-folder-section');
@@ -190,7 +191,8 @@
     pmSaveBtn.classList.add('pm-saved');
     pmSaveBtn.textContent = '✓ Saved';
 
-    // swap full page → Open in Obsidian
+    // hide status, swap full page → Open in Obsidian
+    pmStatus.classList.add('pm-hidden');
     pmFullPageBtn.style.display = 'none';
     pmOpenObsidian.classList.add('pm-visible');
 
@@ -206,6 +208,7 @@
       pmDestDaily.style.opacity = '';
       pmFullPageBtn.style.display = '';
       pmOpenObsidian.classList.remove('pm-visible');
+      pmStatus.classList.remove('pm-hidden');
     }, 3500);
   });
 
