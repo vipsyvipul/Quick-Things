@@ -1,0 +1,319 @@
+(function () {
+  const viewport = document.getElementById('viewport');
+  const world = document.getElementById('world');
+  const W = 3200, H = 2300;
+  const MIN_S = 0.14, MAX_S = 1.6;
+
+  // camera = world point at viewport center + scale
+  const cam = { x: 1600, y: 400, s: 1 };
+
+  function fitScale() {
+    return Math.max(MIN_S, Math.min(
+      window.innerWidth / (W + 160),
+      window.innerHeight / (H + 160),
+      0.85
+    ));
+  }
+
+  const presets = {
+    hub:      () => ({ x: 1600, y: 430,  s: zoomFor(900) }),
+    overview: () => ({ x: 1600, y: 1180, s: fitScale() }),
+    capture:  () => ({ x: 760,  y: 1140, s: zoomFor(1080) }),
+    manage:   () => ({ x: 1660, y: 1420, s: zoomFor(1120) }),
+    organize: () => ({ x: 2460, y: 1140, s: zoomFor(1120) }),
+    install:  () => ({ x: 1600, y: 1960, s: zoomFor(1020) })
+  };
+
+  // scale so `span` world-px fit the viewport width (capped at 1)
+  function zoomFor(span) {
+    return Math.min(1, (window.innerWidth - 60) / span, (window.innerHeight - 60) / 760);
+  }
+
+  const clusterCenters = {
+    hub:      { x: 1600, y: 430 },
+    capture:  { x: 760,  y: 1140 },
+    manage:   { x: 1660, y: 1420 },
+    organize: { x: 2460, y: 1140 },
+    install:  { x: 1600, y: 1960 },
+  };
+
+  let detectTimer = null;
+  function detectSection() {
+    clearTimeout(detectTimer);
+    detectTimer = setTimeout(() => {
+      if (currentPreset === 'overview') return;
+      let nearest = 'hub', minDist = Infinity;
+      for (const [name, c] of Object.entries(clusterCenters)) {
+        const d = Math.hypot(cam.x - c.x, cam.y - c.y);
+        if (d < minDist) { minDist = d; nearest = name; }
+      }
+      if (nearest !== currentPreset) {
+        currentPreset = nearest;
+        if (nearest !== 'hub') prevPreset = nearest;
+        document.querySelectorAll('.chip').forEach(c =>
+          c.classList.toggle('active', c.dataset.go === nearest));
+        updateViewMapBtn(nearest);
+      }
+    }, 120);
+  }
+
+  function apply() {
+    const tx = window.innerWidth / 2 - cam.x * cam.s;
+    const ty = window.innerHeight / 2 - cam.y * cam.s;
+    world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + cam.s + ')';
+    detectSection();
+  }
+
+  let currentPreset = 'hub';
+
+  const viewMapBtn = document.getElementById('viewmap');
+  const viewMapLabel = document.getElementById('viewmap-label');
+  const viewMapIcon = document.getElementById('viewmap-icon');
+  // icon for "back to hub" — a house/return shape
+  const iconHub = `<path d="M7 2L1.5 7H3v5h3V9h2v3h3V7h1.5L7 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/>`;
+  const iconOverview = `<rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/>`;
+
+  const presetLabels = { hub: 'overview', capture: 'Capture', manage: 'Manage', organize: 'Organize', install: 'Install' };
+  let prevPreset = 'hub';
+
+  function updateViewMapBtn(name) {
+    const isOverview = (name === 'overview');
+    viewMapLabel.textContent = isOverview ? `← Back to ${presetLabels[prevPreset] || 'hub'}` : 'View the full map';
+    viewMapIcon.style.display = isOverview ? 'none' : '';
+    viewMapIcon.innerHTML = iconOverview;
+  }
+
+  function goTo(name) {
+    const p = presets[name];
+    if (!p) return;
+    if (name !== 'overview') prevPreset = name;
+    currentPreset = name;
+    const t = p();
+    world.classList.add('glide');
+    cam.x = t.x; cam.y = t.y; cam.s = t.s;
+    apply();
+    document.querySelectorAll('.chip').forEach(c =>
+      c.classList.toggle('active', c.dataset.go === name));
+    updateViewMapBtn(name);
+  }
+
+  viewMapBtn.addEventListener('click', () => {
+    goTo(currentPreset === 'overview' ? prevPreset : 'overview');
+  });
+
+  world.addEventListener('transitionend', () => world.classList.remove('glide'));
+
+  // ── start focused on the hub; user zooms out via "View the full map" ──
+  const start = presets.hub();
+  cam.x = start.x; cam.y = start.y; cam.s = start.s;
+  apply();
+  updateViewMapBtn('hub');
+  // Double-rAF: first frame commits the transform, second measures stable layout
+  requestAnimationFrame(() => requestAnimationFrame(positionAllStickies));
+
+  // ── sticky anchoring ──
+  // Positions a sticky relative to a target card using measured screen coords.
+  // edge: 'top' | 'bottom'  dx/dy: offset in world units  rot: rotation degrees
+  function anchorSticky(id, targetId, edge, dx, dy, rot) {
+    const target = document.getElementById(targetId);
+    const sticky = document.getElementById(id);
+    if (!target || !sticky) return;
+    const r = target.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const sx = r.left + r.width / 2;
+    const sy = edge === 'top' ? r.top : r.bottom;
+    // screen → world
+    const wx = cam.x + (sx - vw / 2) / cam.s + (dx || 0);
+    const wy = cam.y + (sy - vh / 2) / cam.s + (dy || 0);
+    sticky.style.left = wx + 'px';
+    sticky.style.top  = wy + 'px';
+    sticky.style.transform = `translateX(-50%) rotate(${rot}deg)`;
+  }
+
+  function positionAllStickies() {
+    anchorSticky('s-faster',    'cap-card',   'top',    20, -55, -2.4);
+    anchorSticky('s-cliptypes', 'cap-popup',  'bottom',  0,  18,  2.0);
+    anchorSticky('s-hunting',   'mgr-card',   'top',    20, -55, -1.8);
+    anchorSticky('s-filter',    'mgr-window', 'bottom',  0,  18,  2.2);
+    anchorSticky('s-portent',   'org-card',   'top',    20, -55,  2.0);
+    anchorSticky('s-selfbuild', 'org-graph',  'bottom',  0,  18, -2.2);
+  }
+
+  // ── expandable stickies ──
+  document.querySelectorAll('.sticky.x').forEach((sticky) => {
+    ['.sticky-head', '.plus'].forEach(sel => {
+      const el = sticky.querySelector(sel);
+      if (el) el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sticky.classList.toggle('open');
+      });
+    });
+  });
+
+  // ── popup mockup interactions ──
+  const pmSaveBtn      = document.getElementById('pm-save-btn');
+  const pmFullPageBtn  = document.getElementById('pm-full-page-btn');
+  const pmOpenObsidian = document.getElementById('pm-open-obsidian');
+  const pmDailyToggle  = document.getElementById('pm-daily-toggle');
+  const pmToggleTrack  = document.getElementById('pm-toggle-track');
+  const pmFolderSec    = document.getElementById('pm-folder-section');
+  const pmDestNormal   = document.getElementById('pm-dest-normal');
+  const pmDestDaily    = document.getElementById('pm-dest-daily');
+  let pmSaved = false;
+  let pmDailyOn = false;
+
+  // daily note toggle
+  pmDailyToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (pmSaved) return;
+    pmDailyOn = !pmDailyOn;
+    pmToggleTrack.classList.toggle('on', pmDailyOn);
+    pmFolderSec.style.display   = pmDailyOn ? 'none' : '';
+    pmDestNormal.style.display  = pmDailyOn ? 'none' : '';
+    pmDestDaily.style.display   = pmDailyOn ? '' : 'none';
+  });
+
+  // save button
+  pmSaveBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (pmSaved) return;
+    pmSaved = true;
+
+    // grey out fields
+    document.querySelector('.pm-folder-val').classList.add('pm-field-saved');
+    document.querySelector('.pm-dest-val').classList.add('pm-field-saved');
+    document.querySelector('.pm-tags-val').classList.add('pm-field-saved');
+    document.querySelector('.pm-note-val').classList.add('pm-field-saved');
+    if (pmDailyOn) pmDestDaily.style.opacity = '0.5';
+
+    // button → ✓ Saved (teal)
+    pmSaveBtn.classList.add('pm-saved');
+    pmSaveBtn.textContent = '✓ Saved';
+
+    // swap full page → Open in Obsidian
+    pmFullPageBtn.style.display = 'none';
+    pmOpenObsidian.classList.add('pm-visible');
+
+    // auto-reset after 3.5s
+    setTimeout(() => {
+      pmSaved = false;
+      pmSaveBtn.classList.remove('pm-saved');
+      pmSaveBtn.textContent = 'Save Highlight';
+      document.querySelector('.pm-folder-val').classList.remove('pm-field-saved');
+      document.querySelector('.pm-dest-val').classList.remove('pm-field-saved');
+      document.querySelector('.pm-tags-val').classList.remove('pm-field-saved');
+      document.querySelector('.pm-note-val').classList.remove('pm-field-saved');
+      pmDestDaily.style.opacity = '';
+      pmFullPageBtn.style.display = '';
+      pmOpenObsidian.classList.remove('pm-visible');
+    }, 3500);
+  });
+
+  // ── drag to pan (+ pinch) ──
+  const pointers = new Map();
+  let dragDist = 0, lastMid = null, lastSpread = 0;
+
+  viewport.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('a, button, .plus, .popup-mockup')) return;
+    viewport.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    dragDist = 0;
+    lastMid = null;
+    world.classList.remove('glide');
+    viewport.classList.add('dragging');
+  });
+
+  viewport.addEventListener('pointermove', (e) => {
+    if (!pointers.has(e.pointerId)) return;
+    const prev = pointers.get(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (pointers.size === 1) {
+      const dx = e.clientX - prev.x, dy = e.clientY - prev.y;
+      dragDist += Math.abs(dx) + Math.abs(dy);
+      cam.x -= dx / cam.s;
+      cam.y -= dy / cam.s;
+      apply();
+    } else if (pointers.size === 2) {
+      const pts = Array.from(pointers.values());
+      const mid = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 };
+      const spread = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      if (lastMid) {
+        cam.x -= (mid.x - lastMid.x) / cam.s;
+        cam.y -= (mid.y - lastMid.y) / cam.s;
+        if (lastSpread > 0) zoomAt(mid.x, mid.y, spread / lastSpread);
+      }
+      lastMid = mid;
+      lastSpread = spread;
+      dragDist = 99;
+      apply();
+    }
+  });
+
+  function endPointer(e) {
+    pointers.delete(e.pointerId);
+    lastMid = null;
+    if (pointers.size === 0) viewport.classList.remove('dragging');
+  }
+  viewport.addEventListener('pointerup', endPointer);
+  viewport.addEventListener('pointercancel', endPointer);
+
+  // click a cluster (not a drag) → travel to it
+  viewport.addEventListener('click', (e) => {
+    if (dragDist > 8) return;
+    if (e.target.closest('a')) return;
+    const go = e.target.closest('[data-go]');
+    if (go) goTo(go.dataset.go);
+  });
+
+  // ── wheel: zoom (pinch-trackpad/ctrl) or pan ──
+  viewport.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    world.classList.remove('glide');
+    if (e.ctrlKey || e.metaKey) {
+      zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.01));
+    } else {
+      cam.x += e.deltaX / cam.s;
+      cam.y += e.deltaY / cam.s;
+    }
+    apply();
+  }, { passive: false });
+
+  function zoomAt(mx, my, factor) {
+    const newS = Math.min(MAX_S, Math.max(MIN_S, cam.s * factor));
+    // keep the world point under the cursor fixed
+    const wx = cam.x + (mx - window.innerWidth / 2) / cam.s;
+    const wy = cam.y + (my - window.innerHeight / 2) / cam.s;
+    cam.x = wx + (window.innerWidth / 2 - mx) / newS;
+    cam.y = wy + (window.innerHeight / 2 - my) / newS;
+    cam.s = newS;
+  }
+
+  // ── chrome controls ──
+  document.querySelectorAll('.chip, [data-go].btn-primary, button[data-go]').forEach(el => {
+    el.addEventListener('click', () => goTo(el.dataset.go));
+  });
+
+
+  // keyboard: arrows pan, +/- zoom, 0 overview
+  window.addEventListener('keydown', (e) => {
+    const step = 90 / cam.s;
+    if (e.key === 'ArrowLeft')       { cam.x -= step; }
+    else if (e.key === 'ArrowRight') { cam.x += step; }
+    else if (e.key === 'ArrowUp')    { cam.y -= step; }
+    else if (e.key === 'ArrowDown')  { cam.y += step; }
+    else if (e.key === '+' || e.key === '=') { zoomAt(innerWidth / 2, innerHeight / 2, 1.25); }
+    else if (e.key === '-')          { zoomAt(innerWidth / 2, innerHeight / 2, 0.8); }
+    else if (e.key === '0')          { goTo('overview'); return; }
+    else return;
+    e.preventDefault();
+    world.classList.remove('glide');
+    apply();
+  });
+
+  window.addEventListener('resize', () => {
+    if (currentPreset) { const t = presets[currentPreset](); cam.x = t.x; cam.y = t.y; cam.s = t.s; }
+    apply();
+    positionAllStickies();
+  });
+})();
