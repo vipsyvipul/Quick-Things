@@ -475,6 +475,166 @@ body::after {
   margin: 6px 0 3px;
 }
 
+/* ── clip type selector (s-filter sticky) ── */
+.clip-type-selector {
+  grid-template-columns: repeat(3, auto);
+}
+
+.clip-type-btn {
+  background: white;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-2);
+  font-family: var(--font);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.clip-type-btn.active {
+  background: var(--teal-light);
+  border-color: var(--teal);
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+
+/* ── ob-window clip views ── */
+.ob-clip-view { display: none; }
+.ob-clip-view.active { display: block; }
+
+/* full page */
+.qc-fp-bar {
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 1px;
+  margin-bottom: 9px;
+}
+.qc-fp-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 1px;
+}
+.qc-fp-meta {
+  display: flex;
+  gap: 5px;
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 3px;
+}
+.qc-fp-meta .sep { opacity: 0.35; }
+.qc-fp-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 9px;
+}
+.qc-fp-body {
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+}
+
+/* tweet */
+.qc-tweet-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 11px 13px;
+}
+.qc-tweet-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 9px;
+}
+.qc-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--teal-dark);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.qc-tname { font-size: 11.5px; font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.3; }
+.qc-thandle { font-size: 10px; color: rgba(255,255,255,0.38); }
+.qc-tweet-text {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.55;
+  margin-bottom: 9px;
+}
+.qc-tweet-foot {
+  font-size: 10px;
+  color: rgba(255,255,255,0.32);
+}
+
+/* video clip */
+.qc-vthumb {
+  background: rgba(0,0,0,0.35);
+  border-radius: 6px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+}
+.qc-vplay {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: white;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.qc-vtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5px;
+}
+.qc-vtable tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.qc-vtable td { padding: 4px 4px 4px 0; color: rgba(255,255,255,0.6); vertical-align: middle; }
+.qc-ts {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(224,123,84,0.18);
+  border: 1px solid rgba(224,123,84,0.3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 10px;
+  color: #f0a585;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* image */
+.qc-img-mock {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 7px;
+}
+.qc-img-caption {
+  font-size: 10px;
+  color: rgba(255,255,255,0.32);
+  text-align: center;
+}
+
 /* ── mockups (compact reuse) ── */
 .popup-mockup {
   width: 310px;

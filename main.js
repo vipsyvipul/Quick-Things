@@ -139,6 +139,18 @@
     anchorSticky('s-selfbuild', 'org-graph',  'bottom',  0,  18, -2.2);
   }
 
+  // ── clip type switcher ──
+  document.querySelectorAll('.clip-type-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const clip = btn.dataset.clip;
+      document.querySelectorAll('.clip-type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.ob-clip-view').forEach(v => v.classList.remove('active'));
+      document.querySelector(`.ob-clip-view[data-clip="${clip}"]`).classList.add('active');
+    });
+  });
+
   // ── expandable stickies ──
   document.querySelectorAll('.sticky.x').forEach((sticky) => {
     ['.sticky-head', '.plus'].forEach(sel => {
