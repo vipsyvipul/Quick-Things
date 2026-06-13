@@ -480,6 +480,15 @@ body::after {
   grid-template-columns: repeat(3, auto);
 }
 
+#s-filter {
+  padding: 0;
+}
+#s-filter .sticky-body {
+  max-height: 220px;
+  opacity: 1;
+  padding: 10px 12px 12px;
+}
+
 .clip-type-btn {
   background: white;
   border: 1px solid var(--card-border);
