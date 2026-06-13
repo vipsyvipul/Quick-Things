@@ -134,7 +134,7 @@
     anchorSticky('s-faster',    'cap-card',   'top',    20, -55, -2.4);
     anchorSticky('s-cliptypes', 'cap-popup',  'bottom',  0,  8,  2.0);
     anchorSticky('s-hunting',   'mgr-card',   'top',    20, -55, -1.8);
-    anchorSticky('s-filter',    'mgr-window', 'bottom',  0,  18,  2.2);
+    anchorSticky('s-filter',    'mgr-window', 'bottom',  0,  18, -2.8);
     anchorSticky('s-portent',   'org-card',   'top',    20, -55,  2.0);
     anchorSticky('s-selfbuild', 'org-graph',  'bottom',  0,  18, -2.2);
   }
