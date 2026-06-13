@@ -510,13 +510,11 @@ body::after {
 }
 
 /* ── ob-window clip views ── */
-.ob-clip-view { display: none; position: relative; }
+.ob-clip-view { display: none; }
 .ob-clip-view.active { display: block; }
 
 .qc-close {
-  position: absolute;
-  top: 0;
-  right: 0;
+  margin-left: auto;
   width: 17px;
   height: 17px;
   border-radius: 50%;
@@ -525,11 +523,12 @@ body::after {
   color: rgba(255,255,255,0.4);
   font-size: 10px;
   font-family: var(--font);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 /* full page */
@@ -632,6 +631,7 @@ body::after {
   font-size: 10.5px;
 }
 .qc-vtable thead tr { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.qc-vtable td:last-child { text-align: right; width: 24px; }
 .qc-vtable th {
   padding: 5px 4px 5px 0;
   font-size: 9px;
