@@ -147,6 +147,19 @@ body::after {
   margin-bottom: 18px;
 }
 
+/* brand mark: centered above the hero on home/overview, top-left on clusters */
+.hub-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+.hub-brand .brand-name { font-size: 26px; }
+.topbar .brand { transition: opacity 0.35s ease; }
+.topbar .brand { opacity: 0; pointer-events: none; }
+body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
+
 .hub h1 em { font-style: normal; color: var(--orange); }
 
 .hub p {

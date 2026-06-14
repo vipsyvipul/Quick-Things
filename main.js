@@ -49,6 +49,7 @@
       }
       if (nearest !== currentPreset) {
         currentPreset = nearest;
+        updateBrandState(nearest);
         if (nearest !== 'hub') prevPreset = nearest;
         document.querySelectorAll('.chip').forEach(c =>
           c.classList.toggle('active', c.dataset.go === nearest));
@@ -76,6 +77,11 @@
   const presetLabels = { hub: 'overview', capture: 'Capture', manage: 'Manage', organize: 'Organize', install: 'Install' };
   let prevPreset = 'hub';
 
+  // brand mark sits centered above the hero on hub/overview, top-left on clusters
+  function updateBrandState(name) {
+    document.body.classList.toggle('at-cluster', !(name === 'hub' || name === 'overview'));
+  }
+
   function updateViewMapBtn(name) {
     const isOverview = (name === 'overview');
     viewMapLabel.textContent = isOverview ? `← Back to ${presetLabels[prevPreset] || 'hub'}` : 'View the full map';
@@ -88,6 +94,7 @@
     if (!p) return;
     if (name !== 'overview') prevPreset = name;
     currentPreset = name;
+    updateBrandState(name);
     const t = p();
     world.classList.add('glide');
     cam.x = t.x; cam.y = t.y; cam.s = t.s;
@@ -346,6 +353,11 @@
   // ── chrome controls ──
   document.querySelectorAll('.chip, [data-go].btn-primary, button[data-go]').forEach(el => {
     el.addEventListener('click', () => goTo(el.dataset.go));
+  });
+
+  // logo glides back to the hub instead of reloading the page
+  document.querySelectorAll('.brand, .hub-brand').forEach(el => {
+    el.addEventListener('click', (e) => { e.preventDefault(); goTo('hub'); });
   });
 
 
