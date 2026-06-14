@@ -204,6 +204,15 @@
   let pmDailyOn = false;
   let currentPopupClip = 'highlight';
 
+  // daily-note filename reflects today's date (context-aware, like the extension)
+  const pmDailyDate = document.getElementById('pm-daily-date');
+  if (pmDailyDate) {
+    const now = new Date();
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    pmDailyDate.textContent = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  }
+
   // daily note toggle
   pmDailyToggle.addEventListener('click', (e) => {
     e.stopPropagation();
