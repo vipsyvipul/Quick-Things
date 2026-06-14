@@ -747,6 +747,18 @@ body::after {
   color: var(--text);
 }
 
+/* Capture popup is taken out of flow so its height changes (clip-type
+   rotation) never resize the cluster and shift the info card. Row width is
+   pinned to its natural size (330 card + 36 gap + 310 popup) so the cluster's
+   horizontal center stays put with the popup removed from flow. */
+[data-go="capture"] .cluster-row { width: 676px; }
+#cap-popup {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%) rotate(1.6deg);
+}
+
 /* topbar */
 .pm-topbar {
   padding: 13px 14px 10px;
