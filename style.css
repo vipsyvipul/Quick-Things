@@ -315,7 +315,6 @@ body::after {
   border-radius: 8px;
   padding: 10px 14px;
   font-size: 12.5px;
-  font-weight: 600;
   color: var(--ink);
   box-shadow: 4px 4px 0 var(--ink);
   white-space: nowrap;
@@ -386,7 +385,6 @@ body::after {
   gap: 9px;
   font-family: var(--font);
   font-size: 12.5px;
-  font-weight: 600;
   color: var(--ink);
   background: none;
   border: none;
