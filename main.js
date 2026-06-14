@@ -1,7 +1,7 @@
 (function () {
   const viewport = document.getElementById('viewport');
   const world = document.getElementById('world');
-  const W = 3200, H = 2600;
+  const W = 3550, H = 2600;
   const MIN_S = 0.14, MAX_S = 1.6;
 
   // camera = world point at viewport center + scale
@@ -17,10 +17,10 @@
 
   const presets = {
     hub:      () => ({ x: 1600, y: 430,  s: zoomFor(900) }),
-    overview: () => ({ x: 1600, y: 1380, s: fitScale() }),
+    overview: () => ({ x: 1740, y: 1380, s: fitScale() }),
     capture:  () => ({ x: 560,  y: 1360, s: zoomFor(1080) }),
     manage:   () => ({ x: 1660, y: 1730, s: zoomFor(1120) }),
-    organize: () => ({ x: 2630, y: 1360, s: zoomFor(1120) }),
+    organize: () => ({ x: 2940, y: 1360, s: zoomFor(1120) }),
     install:  () => ({ x: 1600, y: 2650, s: zoomFor(1020) })
   };
 
@@ -33,7 +33,7 @@
     hub:      { x: 1600, y: 430 },
     capture:  { x: 530,  y: 1380 },
     manage:   { x: 1640, y: 1740 },
-    organize: { x: 2670, y: 1380 },
+    organize: { x: 2980, y: 1380 },
     install:  { x: 1600, y: 2500 },
   };
 
