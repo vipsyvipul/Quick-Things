@@ -208,6 +208,7 @@
   pmDailyToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     if (pmSaved) return;
+    if (popupCycleTimer) { clearInterval(popupCycleTimer); popupCycleTimer = null; }
     pmDailyOn = !pmDailyOn;
     pmToggleTrack.classList.toggle('on', pmDailyOn);
     pmFolderSec.classList.toggle('pm-collapsed', pmDailyOn);
