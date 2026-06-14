@@ -527,10 +527,9 @@ body::after {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .clip-type-btn.active {
-  background: var(--teal-light);
-  border-color: var(--teal);
-  color: var(--teal-dark);
-  font-weight: 600;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
 }
 
 /* ── ob-window clip views ── */
