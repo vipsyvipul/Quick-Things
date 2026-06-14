@@ -1189,6 +1189,7 @@ body::after {
   transition: box-shadow 0.2s, transform 0.2s;
 }
 .cta-card:hover { box-shadow: 8px 8px 0 var(--ink); transform: translate(-2px,-2px); }
+.cta-card .btn-primary { align-self: flex-start; }
 
 .cta-num { font-family: var(--display); font-style: normal; font-weight: 700; font-size: 14px; color: var(--steel); margin-bottom: 8px; }
 .cta-title { font-size: 16.5px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); margin-bottom: 6px; }
