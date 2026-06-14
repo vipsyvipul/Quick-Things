@@ -350,6 +350,7 @@ body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
   font-size: 9px;
   font-weight: 700;
   font-family: var(--font);
+  font-style: italic;
   display: flex;
   align-items: center;
   justify-content: center;
