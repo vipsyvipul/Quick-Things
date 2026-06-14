@@ -74,7 +74,7 @@
   const iconHub = `<path d="M7 2L1.5 7H3v5h3V9h2v3h3V7h1.5L7 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/>`;
   const iconOverview = `<rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/>`;
 
-  const presetLabels = { hub: 'overview', capture: 'Capture', manage: 'Manage', organize: 'Organize', install: 'Install' };
+  const presetLabels = { hub: 'Start', capture: 'Capture', manage: 'Manage', organize: 'Organize', install: 'Install' };
   let prevPreset = 'hub';
 
   // brand mark sits centered above the hero on hub/overview, top-left on clusters
