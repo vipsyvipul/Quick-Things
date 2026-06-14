@@ -323,13 +323,6 @@ body::after {
 
 .sticky.t { background: var(--mauve); }
 
-.sticky em {
-  font-family: var(--display);
-  font-style: normal;
-  color: var(--ink);
-  font-weight: 700;
-}
-.sticky.t em { color: var(--ink); }
 
 /* sticky tooltip */
 .info-icon {
@@ -394,13 +387,6 @@ body::after {
   min-width: 100%;
 }
 
-.sticky-head em {
-  font-family: var(--display);
-  font-style: normal;
-  color: var(--ink);
-  font-weight: 700;
-}
-.sticky.t .sticky-head em { color: var(--ink); }
 
 /* + button sits on the bottom border, centered */
 .plus {
