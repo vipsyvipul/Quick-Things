@@ -41,7 +41,7 @@ body {
   inset: 0;
   overflow: hidden;
   touch-action: none;
-  cursor: grab;
+  cursor: default;
   /* obsidian-canvas dot grid */
   background-image: radial-gradient(rgba(33,60,81,0.17) 1.3px, transparent 1.3px);
   background-size: 30px 30px;
@@ -192,7 +192,7 @@ body::after {
 .cluster {
   position: absolute;
   transform: translate(-50%, -50%);
-  cursor: pointer;
+  cursor: default;
 }
 
 .ghost-num {
@@ -340,7 +340,7 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: default;
+  cursor: pointer;
   z-index: 20;
 }
 .info-icon:hover .tooltip { opacity: 1; }
@@ -531,7 +531,7 @@ body::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: default;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -924,7 +924,7 @@ body::after {
   text-align: center; width: fit-content; margin: 7px auto 0;
   background: none; border: 1px solid #6594B1; border-radius: 20px;
   padding: 4px 14px; font-size: 10.5px; font-weight: 600;
-  color: #213C51; font-family: var(--font); cursor: pointer;
+  color: #213C51; font-family: var(--font); cursor: default;
 }
 .pm-open-obsidian.pm-visible {
   display: block;
@@ -1271,7 +1271,7 @@ body::after {
 
 .hint a { color: var(--teal-dark); text-decoration: none; }
 .hint a:hover { text-decoration: underline; }
-.tooltip a { color: var(--teal); text-decoration: underline; }
+.tooltip a { color: var(--teal); text-decoration: underline; cursor: pointer; }
 #s-portent .tooltip { pointer-events: auto; }
 #s-portent .tooltip::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 12px; }
 
