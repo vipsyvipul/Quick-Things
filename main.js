@@ -202,6 +202,7 @@
   const pmDestDaily    = document.getElementById('pm-dest-daily');
   let pmSaved = false;
   let pmDailyOn = false;
+  let currentPopupClip = 'highlight';
 
   // daily note toggle
   pmDailyToggle.addEventListener('click', (e) => {
@@ -209,9 +210,9 @@
     if (pmSaved) return;
     pmDailyOn = !pmDailyOn;
     pmToggleTrack.classList.toggle('on', pmDailyOn);
-    pmFolderSec.style.display   = pmDailyOn ? 'none' : '';
-    pmDestNormal.style.display  = pmDailyOn ? 'none' : '';
-    pmDestDaily.style.display   = pmDailyOn ? '' : 'none';
+    pmFolderSec.classList.toggle('pm-collapsed', pmDailyOn);
+    pmDestNormal.classList.toggle('pm-collapsed', pmDailyOn);
+    pmDestDaily.classList.toggle('pm-collapsed', !pmDailyOn);
   });
 
   // save button
@@ -240,7 +241,7 @@
     setTimeout(() => {
       pmSaved = false;
       pmSaveBtn.classList.remove('pm-saved');
-      pmSaveBtn.textContent = 'Save Highlight';
+      pmSaveBtn.textContent = (popupStates[currentPopupClip] || {}).btn || 'Save Highlight';
       document.querySelector('.pm-folder-val').classList.remove('pm-field-saved');
       document.querySelector('.pm-dest-val').classList.remove('pm-field-saved');
       document.querySelector('.pm-tags-val').classList.remove('pm-field-saved');
@@ -257,7 +258,7 @@
   let dragDist = 0, lastMid = null, lastSpread = 0;
 
   viewport.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('a, button, .plus, .popup-mockup')) return;
+    if (e.target.closest('a, button, .plus, .popup-mockup, .sticky')) return;
     viewport.setPointerCapture(e.pointerId);
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     dragDist = 0;
@@ -358,5 +359,154 @@
     if (currentPreset) { const t = presets[currentPreset](); cam.x = t.x; cam.y = t.y; cam.s = t.s; }
     apply();
     positionAllStickies();
+  });
+
+  // ── Organize table: clips organize themselves on a loop ──
+  (function () {
+    const rows = Array.from(document.querySelectorAll('.org-table-mock tbody tr'));
+    if (rows.length < 2) return;
+    const targets = rows.slice(1);            // row 0 is already organized
+    const belongs = ['PKM Research', 'Second Brain', 'BASB', 'Note-taking'];
+    let i = 0;
+    function organize(row, val) {
+      const bc = row.querySelector('.otm-belongs');
+      if (bc) { bc.textContent = val; bc.classList.remove('dim'); }
+      const chk = row.querySelector('.otm-org-cell .otm-chk');
+      if (chk) { chk.classList.add('on'); chk.textContent = '✓'; }
+      row.querySelectorAll('.otm-prog .pd').forEach(p => p.classList.remove('off'));
+    }
+    function reset(row) {
+      const bc = row.querySelector('.otm-belongs');
+      if (bc) { bc.textContent = 'Search notes…'; bc.classList.add('dim'); }
+      const chk = row.querySelector('.otm-org-cell .otm-chk');
+      if (chk) { chk.classList.remove('on'); chk.textContent = ''; }
+      row.querySelectorAll('.otm-prog .pd').forEach((p, k) => p.classList.toggle('off', k > 0));
+    }
+    setInterval(() => {
+      if (i < targets.length) { organize(targets[i], belongs[i % belongs.length]); i++; }
+      else { targets.forEach(reset); i = 0; }
+    }, 2200);
+  })();
+
+  // ── Manage video: timestamp chips scrub the player ──
+  (function () {
+    const fill = document.querySelector('.qc-vscrub-fill');
+    const chips = Array.from(document.querySelectorAll('.qc-ts'));
+    if (!fill || !chips.length) return;
+    const pos = [15, 58, 95];
+    let auto;
+    function seek(idx) {
+      fill.style.width = pos[idx] + '%';
+      chips.forEach((c, k) => { const tr = c.closest('tr'); if (tr) tr.classList.toggle('vts-active', k === idx); });
+    }
+    chips.forEach((chip, idx) => {
+      chip.addEventListener('click', (e) => { e.stopPropagation(); clearInterval(auto); seek(idx); });
+    });
+    let vi = 0;
+    auto = setInterval(() => { vi = (vi + 1) % pos.length; seek(vi); }, 2600);
+    seek(0);
+  })();
+
+  // ── Capture popup: reflects the selected clip type (mimics the extension) ──
+  const popupStates = {
+    highlight: {
+      btn: 'Save Highlight', folder: true, frozen: false, daily: true, fullPage: true,
+      dest: 'Building a Second Brain', tags: ['#pkm', '#ideas'],
+      note: 'Connect to Zettelkasten entry on knowledge synthesis.',
+      icon: '📋', label: 'Highlight ready', quote: '“the best ideas come from connecting what you already know”'
+    },
+    'full-page': {
+      btn: 'Save Full Page', folder: true, frozen: true, daily: false, fullPage: false,
+      dest: 'Building a Second Brain.md', tags: ['#pkm', '#ideas'], note: '',
+      icon: '📄', label: 'Full page ready', quote: 'Building a Second Brain · fortelabs.com'
+    },
+    tweet: {
+      btn: 'Save Tweet', folder: true, frozen: false, daily: true, fullPage: false,
+      dest: 'Building a Second Brain', tags: ['#pkm', '#ideas'], note: 'connecting ideas over time',
+      icon: '🐦', label: 'Tweet ready', quote: '@tiagoforte — “the best ideas don’t come from reading more”'
+    },
+    pdf: {
+      btn: 'Save PDF Highlight', folder: true, frozen: false, daily: true, fullPage: false,
+      dest: 'BASB_Notes', tags: ['#pkm', '#ideas'], note: '',
+      icon: '📕', label: 'PDF highlight ready · p. 47', quote: '“the best ideas come from connecting what you already know”'
+    },
+    video: {
+      btn: 'Save Video Clip', folder: true, frozen: true, daily: false, fullPage: false,
+      dest: 'Building a Second Brain.md', tags: ['#pkm'], note: 'on capturing ideas before they fade',
+      icon: '▶', label: 'Video clip ready · 8:42', quote: 'the CODE method explained'
+    },
+    image: {
+      btn: 'Save Image', folder: true, frozen: false, daily: true, fullPage: true,
+      dest: 'Building a Second Brain', tags: ['#pkm', '#ideas'], note: 'screenshot from PKM workflow',
+      icon: '🖼', label: 'Image ready', quote: 'PKM workflow diagram'
+    }
+  };
+
+  function setPopupClip(clip) {
+    const s = popupStates[clip];
+    if (!s) return;
+    currentPopupClip = clip;
+
+    // clear any "saved" state from a prior interaction
+    pmSaved = false;
+    pmSaveBtn.classList.remove('pm-saved');
+    ['.pm-folder-val', '.pm-dest-val', '.pm-tags-val', '.pm-note-val'].forEach(sel => {
+      const el = document.querySelector(sel); if (el) el.classList.remove('pm-field-saved');
+    });
+    pmStatus.classList.remove('pm-hidden');
+    pmOpenObsidian.classList.remove('pm-visible');
+
+    // daily-note mode resets off (full-page / video ignore save modes)
+    pmDailyOn = false;
+    pmToggleTrack.classList.remove('on');
+    pmDestDaily.classList.add('pm-collapsed');
+
+    // folder + destination
+    pmFolderSec.classList.toggle('pm-collapsed', !s.folder);
+    pmDestNormal.classList.remove('pm-collapsed');
+    pmDestNormal.textContent = s.dest;
+    pmDestNormal.classList.toggle('frozen', s.frozen);
+    // daily toggle hidden when destination is frozen
+    pmDailyToggle.style.display = s.frozen ? 'none' : '';
+
+    // tags
+    const tagsBox = document.querySelector('.pm-tags-box');
+    if (tagsBox) tagsBox.innerHTML = s.tags.map(t => '<span class="pm-chip">' + t + '</span>').join('');
+
+    // note (placeholder when empty)
+    const note = document.querySelector('.pm-note-val');
+    if (note) note.textContent = s.note || 'Add a note…';
+
+    // save button + full-page pill
+    pmSaveBtn.textContent = s.btn;
+    pmFullPageBtn.style.display = s.fullPage ? '' : 'none';
+
+    // status banner
+    const strong = pmStatus.querySelector('strong');
+    const em = pmStatus.querySelector('em');
+    pmStatus.querySelector('.pm-status-icon').textContent = s.icon;
+    if (strong) strong.textContent = s.label;
+    if (em) em.textContent = s.quote;
+
+    // active chip
+    document.querySelectorAll('#s-cliptypes .mini-chip').forEach(c =>
+      c.classList.toggle('active', c.dataset.clip === clip));
+  }
+
+  // auto-rotate through clip types; stop permanently once the user picks one
+  const clipCycle = ['highlight', 'full-page', 'tweet', 'pdf', 'video', 'image'];
+  let clipCycleIdx = 0;
+  let popupCycleTimer = setInterval(() => {
+    clipCycleIdx = (clipCycleIdx + 1) % clipCycle.length;
+    setPopupClip(clipCycle[clipCycleIdx]);
+  }, 3200);
+
+  document.querySelectorAll('#s-cliptypes .mini-chip').forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearInterval(popupCycleTimer);
+      popupCycleTimer = null;
+      setPopupClip(chip.dataset.clip);
+    });
   });
 })();
