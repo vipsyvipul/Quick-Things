@@ -136,6 +136,7 @@
     anchorSticky('s-hunting',   'mgr-card',   'top',    20, -55, -1.8);
     anchorSticky('s-filter',    'mgr-window', 'bottom',  0,  18, -2.8);
     anchorSticky('s-portent',   'org-card',   'top',    20, -55,  2.0);
+    document.getElementById('s-portent').style.top = '1120px';
     anchorSticky('s-selfbuild', 'org-graph',  'bottom',  0,  18, -2.2);
   }
 
