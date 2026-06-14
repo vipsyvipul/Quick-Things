@@ -414,13 +414,8 @@ body::after {
   height: 22px;
   border-radius: 50%;
   background: var(--ink);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1;
+  color: transparent;
+  font-size: 0;
   flex-shrink: 0;
   transition: transform 0.25s ease;
   cursor: pointer;
@@ -428,6 +423,19 @@ body::after {
   box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   z-index: 10;
 }
+/* draw the + with two centered bars (rotates to a clean × when open) */
+.plus::before, .plus::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+}
+.plus::before { transform: translate(-50%, -50%); }
+.plus::after  { transform: translate(-50%, -50%) rotate(90deg); }
 .sticky.t .plus { background: var(--ink); }
 .sticky.open .plus { transform: translateX(-50%) rotate(45deg); }
 
