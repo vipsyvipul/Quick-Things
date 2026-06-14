@@ -974,7 +974,7 @@ body::after {
 
 /* ── Cluster 03 — Organize table mockup ── */
 .org-table-mock {
-  width: 480px;
+  width: 532px;
   background: var(--navy);
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08);
@@ -1047,8 +1047,8 @@ body::after {
 .col-type    { width: 72px;  }
 .col-saved   { width: 52px;  }
 .col-belongs { width: 120px; }
-.col-org     { width: 30px;  }
-.col-prog    { width: 54px;  }
+.col-org     { width: 68px;  }
+.col-prog    { width: 68px;  }
 .otm-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
 .otm-table tbody tr:last-child { border-bottom: none; }
 .otm-table tbody td { padding: 10px 10px; vertical-align: middle; white-space: nowrap; }
@@ -1096,7 +1096,12 @@ body::after {
   border-color: rgba(76,175,125,0.55);
   color: #7fd4a8;
 }
-.otm-prog { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+.otm-prog { font-size: 10px; letter-spacing: 2px; }
+.pd { font-size: 10px; }
+.pd1 { color: #888; }
+.pd2 { color: #E07B54; }
+.pd3 { color: #4ade80; }
+.pd.off { opacity: 0.18; }
 
 /* ── INSTALL CLUSTER ── */
 .install-wrap { text-align: center; }
