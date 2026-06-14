@@ -902,7 +902,7 @@ body::after {
 }
 .pm-status-icon { flex-shrink: 0; font-size: 13px; line-height: 1.3; }
 .pm-status-body strong { display: block; font-weight: 700; font-size: 10.5px; margin-bottom: 2px; }
-.pm-status-body em { font-style: normal; opacity: 0.8; }
+.pm-status-body em { font-style: normal; }
 
 /* save button invite animation */
 @keyframes pm-btn-invite {
