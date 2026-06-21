@@ -2,467 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>QuickThings — Your Obsidian knowledge workflow, complete.</title>
-  <meta property="og:title" content="QuickThings — Your Obsidian knowledge workflow, complete.">
-  <meta property="og:description" content="Explore the QuickClip product family as a knowledge map — capture from the web, manage in Obsidian, organize into connected knowledge.">
-  <meta property="og:type" content="website">
-  <meta name="description" content="Explore the QuickClip product family as a knowledge map — pan, zoom, and travel between Capture, Manager, and Organize.">
-  <meta name="theme-color" content="#FFF8F2">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23E07B54'/%3E%3Cpath d='M16.5 5L10 15h5.5l-2.5 8 8-11h-5.5z' fill='white'/%3E%3C/svg%3E">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickThings — Coming Soon</title>
+  <meta name="description" content="A knowledge workflow for Obsidian. Built for people who are serious about what they save and why.">
+  <meta name="theme-color" content="#EEEEEE">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,400..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:    #EEEEEE;
+      --ink:   #213C51;
+      --steel: #6594B1;
+      --mauve: #DDAED3;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body:    'Hanken Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, rgba(33,60,81,0.18) 1.2px, transparent 1.2px);
+      background-size: 26px 26px;
+      color: var(--ink);
+      font-family: var(--font-body);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* floating dashed edges — product's own visual grammar as ambient texture */
+    .canvas-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .canvas-bg svg { width: 100%; height: 100%; }
+
+    .edge {
+      stroke: rgba(101,148,177,0.28);
+      stroke-width: 2;
+      stroke-dasharray: 9 7;
+      fill: none;
+      animation: dashFlow var(--dur, 5s) linear infinite;
+    }
+
+    @keyframes dashFlow { to { stroke-dashoffset: -64; } }
+    @media (prefers-reduced-motion: reduce) { .edge { animation: none; } }
+
+    .center {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.25rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .tagline {
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--steel);
+    }
+
+    .card {
+      background: var(--mauve);
+      border: 2px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink);
+      border-radius: 3px;
+      padding: 1.75rem 1.75rem 1.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      text-align: left;
+    }
+
+    .card-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    .card-body {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .pill {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--steel);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+    @media (prefers-reduced-motion: reduce) { .pill-dot { animation: none; } }
+
+    .hint {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: rgba(33,60,81,0.45);
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .hint a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
 
-  <noscript>
-    <div class="nojs">
-      <p>QuickThings is an interactive map — it needs JavaScript to pan and zoom.<br>
-      Please enable JavaScript to explore.</p>
-    </div>
-  </noscript>
-
-  <!-- TOP CHROME -->
-  <div class="topbar">
-    <a href="index.html" class="brand" title="QuickThings">
-      <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="28" height="28" rx="8" fill="url(#qtGrad)"/>
-        <path d="M16.5 5L10 15h5.5l-2.5 8 8-11h-5.5z" fill="white"/>
-        <defs>
-          <linearGradient id="qtGrad" x1="0" y1="0" x2="28" y2="28">
-            <stop stop-color="#e8845e"/><stop offset="1" stop-color="#d97248"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      <span class="brand-name">QuickThings</span>
-    </a>
-
-    <div class="chips" role="tablist" aria-label="Map destinations">
-      <button class="chip" data-go="overview">Overview</button>
-      <button class="chip" data-go="capture">01 Capture</button>
-      <button class="chip" data-go="manage">02 Manage</button>
-      <button class="chip" data-go="organize">03 Organize</button>
-      <button class="chip" data-go="install">Install</button>
-    </div>
-
+  <div class="canvas-bg" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path class="edge" vector-effect="non-scaling-stroke" d="M -5,65 C 35,70 65,42 105,38" style="--dur:8.5s" stroke-dashoffset="40"/>
+    </svg>
   </div>
 
-  <!-- THE CANVAS -->
-  <div class="viewport" id="viewport">
-    <div class="world" id="world">
+  <main class="center">
 
-      <!-- pipeline edges -->
-      <svg class="edges" viewBox="0 0 3200 2600" xmlns="http://www.w3.org/2000/svg">
-        <!-- Capture popup right → Manage left -->
-        <path class="edge" d="M 868 1460 C 990 1540, 1150 1640, 1340 1680"/>
-        <!-- Manage right → Organize left -->
-        <path class="edge" d="M 2003 1680 C 2100 1600, 2220 1480, 2307 1380"/>
-        <!-- Organize → Install -->
-        <path class="edge quiet" d="M 2760 1470 C 2620 1750, 2250 2080, 1970 2200"/>
-        <!-- Hub → Capture (faint) -->
-        <path class="edge quiet" d="M 1600 530 C 1560 760, 1140 1080, 870 1230" opacity="0.45"/>
-        <g>
-          <rect x="979" y="1564" width="204" height="26" rx="13" fill="#fff1e8" stroke="rgba(224,123,84,0.35)" stroke-width="1.5"/>
-          <text class="edge-label" x="1081" y="1582" text-anchor="middle">saves to your vault</text>
-        </g>
-        <g>
-          <rect x="2104" y="1517" width="110" height="26" rx="13" fill="#fff1e8" stroke="rgba(224,123,84,0.35)" stroke-width="1.5"/>
-          <text class="edge-label" x="2159" y="1535" text-anchor="middle">classify</text>
-        </g>
-      </svg>
-
-      <!-- HUB -->
-      <div class="hub">
-        <h1>Your Obsidian knowledge workflow, <em>complete.</em></h1>
-        <div class="hub-actions">
-          <button class="btn-primary large" data-go="capture">Start the journey →</button>
-        </div>
-        <div class="hub-hint"><b>Drag</b> to pan &nbsp;·&nbsp; <b>Scroll / pinch</b> to zoom &nbsp;·&nbsp; <b>Click</b> a node to travel</div>
-      </div>
-
-      <!-- CLUSTER 01: CAPTURE -->
-      <div class="cluster" style="left: 530px; top: 1380px;" data-go="capture">
-        <div class="ghost-num">01</div>
-        <div class="cluster-row">
-          <div class="info-card" id="cap-card">
-            <div class="info-tag">Capture Extension · Chrome</div>
-            <h2>Clip the web into Obsidian in seconds.</h2>
-            <p class="sub">Highlights, full pages, tweets, PDFs, YouTube clips — structured Markdown, tagged and ready.</p>
-            <ul class="feat">
-              <li>Highlights stay marked on revisit</li>
-              <li>Smart tag suggestions from history</li>
-              <li>Six clip types, multiple vaults</li>
-            </ul>
-            <a href="#" class="btn-primary">Add to Chrome — It's free</a>
-          </div>
-          <div class="popup-mockup" id="cap-popup">
-            <div class="pm-topbar">
-              <div class="pm-topbar-left">
-                <span class="pm-logo">QuickClip Capture</span>
-                <div class="pm-vault-switcher">
-                  <span class="pm-online-dot"></span>
-                  <span>My Vault</span>
-                  <span class="pm-vault-arrow">▾</span>
-                </div>
-              </div>
-              <div class="pm-settings-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-              </div>
-            </div>
-            <div class="pm-body">
-              <div class="pm-folder-section" id="pm-folder-section">
-                <span class="pm-field-label">Folder</span>
-                <div class="pm-folder-picker pm-folder-val">PKM Notes</div>
-              </div>
-              <div class="pm-field-label-row">
-                <span class="pm-field-label">Destination</span>
-                <div class="pm-toggle-row" id="pm-daily-toggle" style="cursor:pointer">
-                  <div class="pm-toggle-track" id="pm-toggle-track"><div class="pm-toggle-thumb" id="pm-toggle-thumb"></div></div>
-                  <span>Daily Note</span>
-                </div>
-              </div>
-              <div class="pm-input pm-dest-val" id="pm-dest-normal">Building a Second Brain</div>
-              <div class="pm-daily-note-target" id="pm-dest-daily" style="display:none">
-                <span>📅</span> Daily Notes / June 13, 2026.md
-              </div>
-              <span class="pm-field-label">Tags</span>
-              <div class="pm-tags-box pm-tags-val">
-                <span class="pm-chip">#pkm</span>
-                <span class="pm-chip">#ideas</span>
-                              </div>
-              <span class="pm-field-label">Note</span>
-              <div class="pm-textarea pm-note-val" style="color:var(--text-2)">Connect to Zettelkasten entry on knowledge synthesis.</div>
-              <div class="pm-save-btn" id="pm-save-btn">Save Highlight</div>
-              <div class="pm-full-page-btn" id="pm-full-page-btn">or save full page</div>
-              <div class="pm-open-obsidian" id="pm-open-obsidian">Open in Obsidian →</div>
-              <div class="pm-status" id="pm-status">
-                <span class="pm-status-icon">📋</span>
-                <div class="pm-status-body">
-                  <strong>Highlight ready</strong>
-                  <em>"the best ideas come from connecting what you already know"</em>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CLUSTER 02: MANAGE -->
-      <div class="cluster teal" style="left: 1640px; top: 1740px;" data-go="manage">
-        <div class="ghost-num">02</div>
-        <div class="cluster-row">
-          <div class="ob-window" id="mgr-window">
-            <div class="ob-titlebar">
-              <span class="ob-dot"></span><span class="ob-dot"></span><span class="ob-dot"></span>
-              <span class="ob-title">PKM Research — Obsidian</span>
-            </div>
-            <div class="ob-body">
-
-              <!-- HIGHLIGHT -->
-              <div class="ob-clip-view active" data-clip="highlight">
-                <div class="ob-heading">Building a Second Brain</div>
-                <div class="qc-note"><svg class="qc-note-icon" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 2h10a1 1 0 011 1v6a1 1 0 01-1 1H5l-3 2V3a1 1 0 011-1z"/></svg> Connect to Zettelkasten entry on knowledge synthesis.</div>
-                <div class="qc-callout">
-                  <div class="qc-head">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 8.5L7 2h2L6 7h4l-6.5 5.5L6 8.5H2z" fill="#f0a585"/></svg>
-                    Highlight — The best ideas come from…
-                  </div>
-                  <div class="qc-body">the best ideas come from connecting what you already know</div>
-                  <div class="qc-meta">
-                    <span class="qc-tag">#pkm</span><span class="qc-tag">#ideas</span>
-                    <span>·</span><span>26 May 2026</span>
-                    <span class="qc-close">×</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FULL PAGE -->
-              <div class="ob-clip-view" data-clip="full-page">
-                <div class="ob-heading">Building a Second Brain</div>
-                <div class="qc-fp-bar"><div class="qc-fp-fill" style="width:32%"></div></div>
-                <div class="qc-fp-meta">
-                  <span>Tiago Forte</span><span class="sep">·</span><span>8 min read</span><span class="sep">·</span><span>1,840 words</span>
-                </div>
-                <div class="qc-fp-sub">12 Apr 2026 · fortelabs.com</div>
-                <p class="qc-fp-body">The best ideas don't come from reading more books — they come from connecting what you already know and building a system that surfaces them when you need them most…</p>
-                <div class="qc-meta" style="margin-top:9px">
-                  <span class="qc-tag">#pkm</span><span class="qc-tag">#ideas</span>                  <span>·</span><span>26 May 2026</span>
-                </div>
-              </div>
-
-              <!-- TWEET -->
-              <div class="ob-clip-view" data-clip="tweet">
-                <div class="qc-note"><svg class="qc-note-icon" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 2h10a1 1 0 011 1v6a1 1 0 01-1 1H5l-3 2V3a1 1 0 011-1z"/></svg> connecting ideas over time</div>
-                <div class="qc-tweet-card">
-                  <div class="qc-tweet-top">
-                    <div class="qc-avatar">TF</div>
-                    <div>
-                      <div class="qc-tname">Tiago Forte</div>
-                      <div class="qc-thandle">@tiagoforte</div>
-                    </div>
-                  </div>
-                  <div class="qc-tweet-text">The best ideas don't come from reading more. They come from connecting what you already know.</div>
-                  <div class="qc-tweet-foot">♥ 2.4k &nbsp;·&nbsp; ↩ 847 &nbsp;·&nbsp; 14 May 2026</div>
-                </div>
-                <div class="qc-meta" style="margin-top:9px">
-                  <span class="qc-tag">#pkm</span><span class="qc-tag">#ideas</span>
-                  <span>·</span><span>26 May 2026</span>
-                  <span class="qc-close">×</span>
-                </div>
-              </div>
-
-              <!-- PDF HIGHLIGHT -->
-              <div class="ob-clip-view" data-clip="pdf">
-                <div class="ob-heading">BASB_Notes.pdf</div>
-                <div class="qc-callout">
-                  <div class="qc-head">
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="8" height="11" rx="1" stroke="#f0a585" stroke-width="1.3" fill="none"/><path d="M4 5h5M4 7h5M4 9h3" stroke="#f0a585" stroke-width="1.1" stroke-linecap="round"/></svg>
-                    PDF Highlight — Page 47
-                  </div>
-                  <div class="qc-body">the best ideas come from connecting what you already know</div>
-                  <div class="qc-meta">
-                    <span class="qc-tag">#pkm</span><span class="qc-tag">#ideas</span>
-                    <span>·</span><span>26 May 2026</span>
-                    <span class="qc-close">×</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- VIDEO CLIP -->
-              <div class="ob-clip-view" data-clip="video">
-                <div class="qc-vthumb">
-                  <div class="qc-vplay">▶</div>
-                  <div>
-                    <div class="qc-vtitle">Building a Second Brain</div>
-                    <div class="qc-vchan">Ali Abdaal · YouTube</div>
-                  </div>
-                </div>
-                <table class="qc-vtable">
-                  <thead><tr>
-                    <th>TIME</th><th>NOTE</th><th>TAGS</th><th></th>
-                  </tr></thead>
-                  <tbody>
-                    <tr>
-                      <td><span class="qc-ts">▶ 2:15</span></td>
-                      <td>on capturing ideas before they fade</td>
-                      <td><span class="qc-tag">#pkm</span></td>
-                      <td><span class="qc-close">×</span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="qc-ts">▶ 8:42</span></td>
-                      <td>CODE method explained</td>
-                      <td><span class="qc-tag">#ideas</span></td>
-                      <td><span class="qc-close">×</span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="qc-ts">▶ 14:30</span></td>
-                      <td>connecting notes with links</td>
-                      <td><span class="qc-tag">#pkm</span></td>
-                      <td><span class="qc-close">×</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- IMAGE -->
-              <div class="ob-clip-view" data-clip="image">
-                <div class="qc-note"><svg class="qc-note-icon" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 2h10a1 1 0 011 1v6a1 1 0 01-1 1H5l-3 2V3a1 1 0 011-1z"/></svg> screenshot from PKM workflow</div>
-                <div class="qc-img-mock">
-                  <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="30" rx="3" fill="rgba(255,255,255,0.04)"/>
-                    <path d="M4 22 L12 14 L18 20 L26 10 L36 22Z" fill="rgba(145,198,188,0.25)" stroke="rgba(145,198,188,0.5)" stroke-width="1" stroke-linejoin="round"/>
-                    <circle cx="10" cy="9" r="3" fill="rgba(224,123,84,0.4)"/>
-                  </svg>
-                </div>
-                <div class="qc-meta" style="margin-top:7px">
-                  <span class="qc-tag">#pkm</span><span class="qc-tag">#ideas</span>
-                  <span>·</span><span>26 May 2026</span>
-                  <span class="qc-close">×</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="info-card" id="mgr-card">
-            <div class="info-tag">Clip Manager · Obsidian plugin</div>
-            <h2>Your clips, beautifully rendered.</h2>
-            <p class="sub">A reading view that feels native — plus a panel to edit, annotate, and delete without hunting through files.</p>
-            <ul class="feat">
-              <li>Rich reading view, all clip types</li>
-              <li>Inline tag &amp; note editing</li>
-              <li>Collapsible cards, per-type colors</li>
-            </ul>
-            <a href="#" class="btn-primary">Install Plugin</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- CLUSTER 03: ORGANIZE -->
-      <div class="cluster navy" style="left: 2670px; top: 1380px;" data-go="organize">
-        <div class="ghost-num">03</div>
-        <div class="cluster-row">
-          <div class="info-card" id="org-card">
-            <div class="info-tag">Organize · Obsidian plugin</div>
-            <h2>From clip backlog to organized knowledge.</h2>
-            <p class="sub">A smart dashboard that classifies, links, and tracks your clips — your vault builds itself as you research.</p>
-            <ul class="feat">
-              <li>Portent type system — 8 types</li>
-              <li>Link clips to projects &amp; topics</li>
-              <li>Organized tracker &amp; archive</li>
-            </ul>
-            <a href="#" class="btn-primary">Install Plugin</a>
-          </div>
-          <div class="org-table-mock" id="org-graph">
-            <div class="otm-tabs">
-              <span class="otm-tab active">All Clips</span>
-              <span class="otm-tab">By Type</span>
-              <span class="otm-tab">Archived</span>
-              <span class="otm-show-org"><span class="otm-chk on">✓</span> Show organized</span>
-            </div>
-            <div class="otm-filters">
-              <span class="otm-fl">Type</span><span class="otm-fv">All types</span>
-              <span class="otm-fl">Progress</span><span class="otm-fv">All</span>
-              <span class="otm-fl">Date</span><span class="otm-fv">All time</span>
-            </div>
-            <table class="otm-table">
-              <thead><tr>
-                <th class="col-title">TITLE ↕</th>
-                <th class="col-type">TYPE ↕</th>
-                <th class="col-saved">SAVED ↓</th>
-                <th class="col-belongs">BELONGS TO</th>
-                <th class="col-org">ORG</th>
-                <th class="col-prog">PROG</th>
-              </tr></thead>
-              <tbody>
-                <tr>
-                  <td class="otm-title">The best ideas come from…</td>
-                  <td><span class="otm-badge">Note</span></td>
-                  <td class="otm-muted">26 May</td>
-                  <td class="otm-belongs">PKM Research</td>
-                  <td class="otm-org-cell"><span class="otm-chk on">✓</span></td>
-                  <td class="otm-prog">●●○</td>
-                </tr>
-                <tr>
-                  <td class="otm-title">Building a Second Brain</td>
-                  <td><span class="otm-badge topic">Topic</span></td>
-                  <td class="otm-muted">26 May</td>
-                  <td class="otm-belongs dim">Search notes…</td>
-                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
-                  <td class="otm-prog">●○○</td>
-                </tr>
-                <tr>
-                  <td class="otm-title">Tiago Forte</td>
-                  <td><span class="otm-badge person">Person</span></td>
-                  <td class="otm-muted">14 May</td>
-                  <td class="otm-belongs dim">Search notes…</td>
-                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
-                  <td class="otm-prog">●○○</td>
-                </tr>
-                <tr>
-                  <td class="otm-title">BASB · Ali Abdaal</td>
-                  <td><span class="otm-badge">Note</span></td>
-                  <td class="otm-muted">12 Apr</td>
-                  <td class="otm-belongs dim">Search notes…</td>
-                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
-                  <td class="otm-prog">●○○</td>
-                </tr>
-                <tr>
-                  <td class="otm-title">Zettelkasten</td>
-                  <td><span class="otm-badge topic">Topic</span></td>
-                  <td class="otm-muted">8 Apr</td>
-                  <td class="otm-belongs dim">Search notes…</td>
-                  <td class="otm-org-cell"><span class="otm-chk"></span></td>
-                  <td class="otm-prog">●○○</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- STICKIES — positioned by JS via anchorSticky() -->
-      <div id="s-faster" class="sticky">
-        <span class="info-icon">i<span class="tooltip">Capture remembers your last saved destination, most used tags, and save mode, so that you don't have to reselect every time.</span></span>
-        <em>~2×</em> faster saves
-      </div>
-      <div id="s-cliptypes" class="sticky t x">
-        <button class="sticky-head"><em>6</em> clip types</button>
-        <div class="sticky-body">
-          <span class="mini-chip">Highlight</span><span class="mini-chip">Full page</span><span class="mini-chip">Tweet</span><span class="mini-chip">PDF highlight</span><span class="mini-chip">Video clip</span><span class="mini-chip">Image</span>
-        </div>
-        <span class="plus">+</span>
-      </div>
-      <div id="s-hunting" class="sticky">
-        <span class="info-icon">i<span class="tooltip">Every clip has a one-click delete in the reading view, no file hunting or manual cleanup.</span></span>
-        delete without <em>hunting</em>
-      </div>
-      <div id="s-filter" class="sticky t">
-        <div class="sticky-body clip-type-selector">
-          <button class="clip-type-btn active" data-clip="highlight">Highlight</button>
-          <button class="clip-type-btn" data-clip="full-page">Full page</button>
-          <button class="clip-type-btn" data-clip="tweet">Tweet</button>
-          <button class="clip-type-btn" data-clip="pdf">PDF</button>
-          <button class="clip-type-btn" data-clip="video">Video clip</button>
-          <button class="clip-type-btn" data-clip="image">Image</button>
-        </div>
-      </div>
-      <div id="s-portent" class="sticky x">
-        <span class="info-icon">i<span class="tooltip">Portent is an open specification for portable knowledge base systems. Learn more about it <a href="https://portent.md/" target="_blank" rel="noopener">here</a>.</span></span>
-        <button class="sticky-head">Portent: <em>8 types</em></button>
-        <div class="sticky-body">
-          <span class="legend">Actionable</span>
-          <span class="mini-chip port">Project</span><span class="mini-chip port">Operation</span><span class="mini-chip port">Responsibility</span><span class="mini-chip port">Task</span>
-          <span class="legend">Knowledge</span>
-          <span class="mini-chip entp">Event</span><span class="mini-chip entp">Note</span><span class="mini-chip entp">Topic</span><span class="mini-chip entp">Person</span>
-        </div>
-        <span class="plus">+</span>
-      </div>
-      <div id="s-selfbuild" class="sticky t">organized notes, <em>self building knowledge</em></div>
-
-      <!-- INSTALL -->
-      <div class="cluster" style="left: 1600px; top: 2300px;" data-go="install">
-        <div class="install-wrap">
-          <h2>Start with one. Use all <em>three.</em></h2>
-          <p>Each tool works standalone. Together they complete your workflow.</p>
-          <div class="cta-cards">
-            <div class="cta-card">
-              <div class="cta-num">01</div>
-              <div class="cta-title">Capture Extension</div>
-              <p class="cta-desc">Clip the web into Obsidian in seconds — highlights, pages, tweets, PDFs, videos.</p>
-              <a href="#" class="btn-primary">Add to Chrome</a>
-            </div>
-            <div class="cta-card featured">
-              <div class="cta-num">02</div>
-              <div class="cta-title">Clip Manager</div>
-              <p class="cta-desc">Render every clip as a beautiful card and manage them all inside Obsidian.</p>
-              <a href="#" class="btn-primary">Install Plugin</a>
-            </div>
-            <div class="cta-card">
-              <div class="cta-num">03</div>
-              <div class="cta-title">Organize</div>
-              <p class="cta-desc">Classify, link, and track your clips into a structured knowledge graph.</p>
-              <a href="#" class="btn-primary">Install Plugin</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div class="brand">
+      <img src="assets/logo.svg" width="42" height="42" alt="QuickThings logo">
+      <span class="wordmark">QuickThings</span>
+      <p class="tagline">Capture the web. <em>Build a second brain.</em></p>
     </div>
-  </div>
 
-  <!-- BOTTOM CHROME -->
-  <div class="hint">
-    <span class="kbd-only">Drag to pan · Scroll to zoom</span>
-    <a href="https://github.com/vipsyvipul/QuickClip-Capture-Extension" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://gist.github.com/vipsyvipul/f84f24e4b43f0dc3cf8ea78c3ce73495" target="_blank" rel="noopener">Privacy</a>
-  </div>
+    <div class="card">
+      <span class="card-label">Status</span>
+      <p class="card-body">A knowledge workflow for Obsidian — built for people who are serious about what they save and why. Something worth waiting for.</p>
+      <div class="pill"><span class="pill-dot"></span> Coming soon</div>
+    </div>
 
-  <button class="btn-map" id="viewmap" style="position:fixed;right:20px;bottom:20px;z-index:100;">
-    <svg id="viewmap-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="4.5" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.3"/></svg>
-    <span id="viewmap-label">View the full map</span>
-  </button>
+  </main>
 
-  <script src="main.js"></script>
+  <p class="hint">
+    <span>Directed by <a href="https://www.linkedin.com/in/vipulbansal" target="_blank" rel="noopener">Vipul Bansal</a> · Built with AI</span>
+  </p>
+
 </body>
 </html>
