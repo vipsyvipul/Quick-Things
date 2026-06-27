@@ -1,4 +1,8 @@
 (function () {
+  function track(event, params) {
+    if (typeof gtag === 'function') gtag('event', event, params || {});
+  }
+
   const viewport = document.getElementById('viewport');
   const world = document.getElementById('world');
   const W = 3550, H = 2600;
@@ -102,6 +106,8 @@
     document.querySelectorAll('.chip').forEach(c =>
       c.classList.toggle('active', c.dataset.go === name));
     updateViewMapBtn(name);
+    if (name === 'overview') track('map_view');
+    else if (name !== 'hub') track('cluster_visit', { cluster: name });
   }
 
   viewMapBtn.addEventListener('click', () => {
@@ -178,6 +184,7 @@
       clearInterval(autoCycleTimer);
       autoCycleTimer = null;
       switchClip(btn.dataset.clip);
+      track('clip_type_select', { clip: btn.dataset.clip });
     });
   });
 
@@ -193,6 +200,7 @@
       if (el) el.addEventListener('click', (e) => {
         e.stopPropagation();
         sticky.classList.toggle('open');
+        if (sticky.classList.contains('open')) track('sticky_expand', { sticky: sticky.id });
       });
     });
   });
@@ -358,6 +366,11 @@
   // logo glides back to the hub instead of reloading the page
   document.querySelectorAll('.brand, .hub-brand').forEach(el => {
     el.addEventListener('click', (e) => { e.preventDefault(); goTo('hub'); });
+  });
+
+  // CTA link clicks
+  document.querySelectorAll('a.btn-primary').forEach(a => {
+    a.addEventListener('click', () => track('cta_click', { label: a.textContent.trim().slice(0, 60) }));
   });
 
 
