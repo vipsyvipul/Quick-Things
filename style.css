@@ -111,27 +111,6 @@ body::after {
   text-align: center;
 }
 
-.hub-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--teal-light);
-  border: 1px solid rgba(101,148,177,0.7);
-  border-radius: 20px;
-  padding: 4px 13px;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--teal-dark);
-  margin-bottom: 22px;
-}
-
-.hub-dot {
-  width: 6px; height: 6px;
-  background: #4caf7d;
-  border-radius: 50%;
-  animation: pulse-dot 2.5s ease-in-out infinite;
-}
-
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.55; transform: scale(1.35); }
@@ -164,12 +143,6 @@ body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
 .hub-sub em { font-style: normal; color: var(--navy); }
 .hub-sub i { font-style: italic; }
 
-.hub p {
-  font-size: 17px;
-  color: var(--text-2);
-  max-width: 520px;
-  margin: 0 auto 26px;
-}
 
 .hub-actions {
   display: flex;
@@ -1025,30 +998,6 @@ body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
   font-weight: 500;
 }
 
-.graph-canvas {
-  width: 360px;
-  background: var(--navy);
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 50px rgba(33,60,81,0.35);
-  overflow: hidden;
-  transform: rotate(1.4deg);
-}
-.graph-canvas svg { display: block; width: 100%; height: auto; }
-.g-edge { stroke: rgba(101,148,177,0.35); stroke-width: 1.2; fill: none; }
-.g-label { font-family: var(--font); font-size: 10px; fill: rgba(255,255,255,0.55); }
-.g-label.main { fill: #a9cce0; font-weight: 600; font-size: 10.5px; }
-.g-label.proj { fill: var(--teal); font-weight: 600; }
-.g-pulse { animation: g-pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes g-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.25; }
-  50%       { transform: scale(1.5); opacity: 0.1; }
-}
-.graph-badges { display: flex; gap: 6px; justify-content: center; padding: 0 14px 16px; }
-.g-badge { font-size: 10px; font-weight: 600; border-radius: 12px; padding: 3px 10px; }
-.g-badge.type { background: rgba(101,148,177,0.15); color: #a9cce0; border: 1px solid rgba(101,148,177,0.3); }
-.g-badge.org  { background: rgba(76,175,125,0.13); color: #7fd4a8; border: 1px solid rgba(76,175,125,0.3); }
-.g-badge.proj { background: rgba(101,148,177,0.13); color: var(--teal); border: 1px solid rgba(101,148,177,0.3); }
 
 /* ── Cluster 03 — Organize table mockup ── */
 .org-table-mock {
