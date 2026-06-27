@@ -365,7 +365,7 @@ body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
 .okf-wrap::after { content: '.'; }
 .okf-link { color: var(--steel); text-decoration: underline dotted; text-underline-offset: 2px; cursor: pointer; }
 .okf-wrap:hover .tooltip { opacity: 1; pointer-events: auto; }
-.okf-wrap .tooltip { bottom: calc(100% + 6px); width: 190px; left: 50%; }
+.okf-wrap .tooltip { bottom: calc(100% + 6px); width: 190px; left: 50%; text-align: center; }
 
 .tooltip {
   position: absolute;
