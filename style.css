@@ -139,12 +139,12 @@ body::after {
 
 .hub h1 {
   font-family: var(--display);
-  font-size: 58px;
+  font-size: 40px;
   font-weight: 560;
   letter-spacing: -0.02em;
   line-height: 1.06;
   color: var(--navy);
-  margin-bottom: 18px;
+  margin-bottom: 35px;
 }
 
 /* brand mark: centered above the hero on home/overview, top-left on clusters */
@@ -153,14 +153,16 @@ body::after {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  margin-bottom: 24px;
+  margin-bottom: 35px;
 }
-.hub-brand .brand-name { font-size: 26px; }
+.hub-brand .brand-name { font-size: 40px; }
 .topbar .brand { transition: opacity 0.35s ease; }
 .topbar .brand { opacity: 0; pointer-events: none; }
 body.at-cluster .topbar .brand { opacity: 1; pointer-events: auto; }
 
 .hub h1 em { font-style: normal; color: var(--orange); }
+.hub-sub em { font-style: normal; color: var(--navy); }
+.hub-sub i { font-style: italic; }
 
 .hub p {
   font-size: 17px;

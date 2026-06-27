@@ -4,12 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>QuickThings — Your Obsidian knowledge workflow, complete.</title>
-  <meta property="og:title" content="QuickThings — Your Obsidian knowledge workflow, complete.">
-  <meta property="og:description" content="Explore the QuickClip product family as a knowledge map — capture from the web, manage in Obsidian, organize into connected knowledge.">
-  <meta property="og:type" content="website">
-  <meta name="description" content="Explore the QuickClip product family as a knowledge map — pan, zoom, and travel between Capture, Manager, and Organize.">
+  <link rel="canonical" href="https://quickthings.in">
+  <meta name="description" content="Explore the QuickClip product family as a knowledge map — capture from the web, manage in Obsidian, organize into connected knowledge.">
   <meta name="theme-color" content="#EEEEEE">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23213C51'/%3E%3Cpath d='M16.5 5L10 15h5.5l-2.5 8 8-11h-5.5z' fill='white'/%3E%3C/svg%3E">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://quickthings.in">
+  <meta property="og:site_name"   content="QuickThings">
+  <meta property="og:title"       content="QuickThings — Your Obsidian knowledge workflow, complete.">
+  <meta property="og:description" content="Explore the QuickClip product family as a knowledge map — capture from the web, manage in Obsidian, organize into connected knowledge.">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="QuickThings — Your Obsidian knowledge workflow, complete.">
+  <meta name="twitter:description" content="Explore the QuickClip product family as a knowledge map — capture from the web, manage in Obsidian, organize into connected knowledge.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet">
@@ -28,13 +34,8 @@
   <div class="topbar">
     <a href="index.html" class="brand" title="QuickThings">
       <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="28" height="28" rx="8" fill="url(#qtGrad)"/>
-        <path d="M16.5 5L10 15h5.5l-2.5 8 8-11h-5.5z" fill="white"/>
-        <defs>
-          <linearGradient id="qtGrad" x1="0" y1="0" x2="28" y2="28">
-            <stop stop-color="#6594B1"/><stop offset="1" stop-color="#213C51"/>
-          </linearGradient>
-        </defs>
+        <rect width="28" height="28" rx="8" fill="#213C51"/>
+        <path d="M15 5L8.5 15h5.5l-2.5 8 8-11h-5.5z" fill="#EEEEEE"/>
       </svg>
       <span class="brand-name">QuickThings</span>
     </a>
@@ -77,16 +78,16 @@
       <div class="hub">
         <a href="index.html" class="hub-brand" title="QuickThings">
           <svg width="44" height="44" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="28" height="28" rx="8" fill="url(#qtGrad)"/>
-            <path d="M16.5 5L10 15h5.5l-2.5 8 8-11h-5.5z" fill="white"/>
+            <rect width="28" height="28" rx="8" fill="#213C51"/>
+            <path d="M15 5L8.5 15h5.5l-2.5 8 8-11h-5.5z" fill="#EEEEEE"/>
           </svg>
           <span class="brand-name">QuickThings</span>
         </a>
-        <h1>Capture the web. <em>Build a second brain.</em></h1>
+        <h1 class="hub-sub">Mediums that help you <i>build</i> and <i>manage</i> your second brain.<br><em>Quicker.</em></h1>
         <div class="hub-actions">
-          <button class="btn-primary large" data-go="capture">Start the journey →</button>
+          <button class="btn-primary large" data-go="capture">Start the journey</button>
         </div>
-        <div class="hub-hint"><b>Drag</b> to pan &nbsp;·&nbsp; <b>Scroll / pinch</b> to zoom &nbsp;·&nbsp; <b>Click</b> a node to travel</div>
+        <div class="hub-hint"><b>Drag</b> to pan &nbsp;·&nbsp; <b>Scroll / pinch</b> to zoom</div>
       </div>
 
       <!-- CLUSTER 01: CAPTURE -->
@@ -470,5 +471,17 @@
   </button>
 
   <script src="main.js"></script>
+  <script>
+    if (location.hostname === 'quickthings.in') {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WBWJW3R2Z4';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WBWJW3R2Z4');
+    }
+  </script>
 </body>
 </html>
