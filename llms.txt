@@ -1,0 +1,30 @@
+# QuickThings
+
+> Personal knowledge management tools built for Obsidian users.
+
+QuickThings is a suite of tools that helps people capture, manage, and organize knowledge inside Obsidian. The website is an interactive spatial map — not a standard scroll page — so the HTML alone does not convey the full content.
+
+## Products
+
+### QuickClip Capture (Chrome Extension)
+Clips content from the web directly into Obsidian as clean Markdown. Supports six clip types: text highlights on webpages or PDFs, full web pages, tweets, YouTube or Vimeo video moments (with timestamps), PDF highlights, and images. Clips are tagged and optionally routed to a Daily Note. Highlights stay marked on revisit. Supports multiple vaults.
+
+### QuickClip Capture Manager (Obsidian Plugin)
+A companion plugin that renders every clip as a rich reading card inside Obsidian. Provides a native reading view for all six clip types, inline tag and note editing, and collapsible cards with per-type colors — without needing to open individual files.
+
+### Quick Organize (Obsidian Plugin)
+A dashboard that classifies, links, and tracks notes into organized knowledge. Built on the PORTENT specification (portent.md) — an open standard for portable knowledge base systems. Supports eight note types: Project, Operation, Responsibility, Task (actionable) and Event, Note, Topic, Person (knowledge). Supports the Open Knowledge Format (OKF).
+
+## Positioning
+
+- Built for Obsidian users who think in a second brain workflow
+- Not competing with Obsidian Web Clipper — built for a different job
+- The three products form a complete pipeline: Capture → Manage → Organize
+- Each product works standalone; together they complete the workflow
+
+## Links
+
+- Website: https://quickthings.in
+- QuickClip Capture (Chrome): https://chromewebstore.google.com/detail/quickclip-capture/edabdpgppnhbogfpdghjekdalmipflel
+- QuickClip Capture Manager (Obsidian): https://community.obsidian.md/plugins/quickclip-capture
+- Quick Organize (Obsidian): https://community.obsidian.md/plugins/quickclip-organize
