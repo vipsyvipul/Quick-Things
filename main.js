@@ -5,7 +5,7 @@
 
   const viewport = document.getElementById('viewport');
   const world = document.getElementById('world');
-  const W = 3550, H = 2600;
+  const W = 3550, H = 2950;
   const MIN_S = 0.14, MAX_S = 1.6;
 
   // camera = world point at viewport center + scale
@@ -62,7 +62,19 @@
     }, 120);
   }
 
+  function clampCam() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const halfW = vw / (2 * cam.s);
+    const halfH = vh / (2 * cam.s);
+    const pad = 100;
+    const minX = halfW - pad, maxX = W - halfW + pad;
+    const minY = halfH - pad, maxY = H - halfH + pad;
+    cam.x = minX < maxX ? Math.max(minX, Math.min(maxX, cam.x)) : W / 2;
+    cam.y = minY < maxY ? Math.max(minY, Math.min(maxY, cam.y)) : H / 2;
+  }
+
   function apply() {
+    clampCam();
     const tx = window.innerWidth / 2 - cam.x * cam.s;
     const ty = window.innerHeight / 2 - cam.y * cam.s;
     world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + cam.s + ')';
